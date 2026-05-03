@@ -6,11 +6,19 @@ import { requireAdmin } from "../lib/auth";
 
 const router = Router();
 
+function safeArr(v: any): any[] {
+  if (Array.isArray(v)) return v;
+  if (typeof v === "string" && v) {
+    try { const p = JSON.parse(v); return Array.isArray(p) ? p : []; } catch { return []; }
+  }
+  return [];
+}
+
 function toBlog(b: any) {
   return {
     id: b.id, title: b.title, slug: b.slug, excerpt: b.excerpt,
     content: b.content, imageUrl: b.imageUrl, author: b.author,
-    tags: b.tags || [], createdAt: b.createdAt?.toISOString(),
+    tags: safeArr(b.tags), createdAt: b.createdAt?.toISOString(),
   };
 }
 
