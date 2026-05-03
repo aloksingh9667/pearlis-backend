@@ -7,6 +7,14 @@ import { triggerStockAlerts } from "./stock-alerts";
 
 const router = Router();
 
+function safeArr(v: any): any[] {
+  if (Array.isArray(v)) return v;
+  if (typeof v === "string" && v) {
+    try { const p = JSON.parse(v); return Array.isArray(p) ? p : []; } catch { return []; }
+  }
+  return [];
+}
+
 function toProduct(p: any) {
   return {
     id: p.id,
@@ -18,7 +26,7 @@ function toProduct(p: any) {
     category: p.category,
     categoryId: p.categoryId,
     material: p.material,
-    images: p.images || [],
+    images: safeArr(p.images),
     videoUrl: p.videoUrl || null,
     stock: p.stock,
     isNew: p.isNew,
@@ -26,13 +34,13 @@ function toProduct(p: any) {
     isFeatured: p.isFeatured,
     rating: parseFloat(p.rating || "0"),
     reviewCount: p.reviewCount,
-    tags: p.tags || [],
-    specifications: p.specifications || [],
+    tags: safeArr(p.tags),
+    specifications: safeArr(p.specifications),
     craftStory: p.craftStory || null,
-    craftPoints: p.craftPoints || [],
+    craftPoints: safeArr(p.craftPoints),
     shippingInfo: p.shippingInfo || null,
-    sizes: p.sizes || [],
-    materialVariants: p.materialVariants || [],
+    sizes: safeArr(p.sizes),
+    materialVariants: safeArr(p.materialVariants),
     createdAt: p.createdAt?.toISOString(),
   };
 }
