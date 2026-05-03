@@ -9,6 +9,12 @@ const APP_URL = process.env.APP_URL || "https://pearlis.replit.app";
 
 const router = Router();
 
+
+function safeArr(v: any): any[] {
+  if (Array.isArray(v)) return v;
+  if (typeof v === 'string') { try { const p = JSON.parse(v); return Array.isArray(p) ? p : []; } catch { return []; } }
+  return [];
+}
 function toOrder(o: any) {
   return {
     id: o.id,
@@ -18,7 +24,7 @@ function toOrder(o: any) {
     subtotal: parseFloat(o.subtotal),
     discount: parseFloat(o.discount || "0"),
     couponCode: o.couponCode,
-    items: o.items || [],
+    items: safeArr(o.items),
     shippingAddress: o.shippingAddress,
     paymentMethod: o.paymentMethod,
     paymentStatus: o.paymentStatus,
