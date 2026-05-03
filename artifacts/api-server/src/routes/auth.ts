@@ -141,4 +141,42 @@ router.post("/auth/change-password", requireAuth, async (req, res) => {
   }
 });
 
+
+router.post("/auth/google", async (req, res) => {
+  try {
+    const { access_token } = req.body;
+    if (!access_token) {
+      res.status(400).json({ error: "Missing access_token" });
+      return;
+    }
+    const googleRes = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`);
+    if (!googleRes.ok) {
+      res.status(401).json({ error: "Invalid Google token" });
+      return;
+    }
+    const googleUser = await googleRes.json() as { id: string; email: string; name: string; picture: string };
+    if (!googleUser.email) {
+      res.status(400).json({ error: "Could not retrieve email from Google" });
+      return;
+    }
+    let [user] = await db.select().from(usersTable).where(eq(usersTable.email, googleUser.email));
+    if (!user) {
+      [user] = await db.insert(usersTable).values({
+        email: googleUser.email,
+        name: googleUser.name || googleUser.email.split("@")[0],
+        avatar: googleUser.picture || null,
+        role: "user",
+        passwordHash: null,
+      }).returning();
+    } else if (googleUser.picture && !user.avatar) {
+      [user] = await db.update(usersTable).set({ avatar: googleUser.picture }).where(eq(usersTable.id, user.id)).returning();
+    }
+    const token = signToken({ id: user.id, email: user.email, role: user.role });
+    res.json({ user: toUser(user), token });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Google authentication failed" });
+  }
+});
+
 export default router;
