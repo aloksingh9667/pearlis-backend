@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@workspace/db";
 import { usersTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
-import { signToken, requireAuth, hashPassword, comparePassword } from "../lib/auth";
+import { signToken, requireAuth, requireAdmin, hashPassword, comparePassword } from "../lib/auth";
 
 const router = Router();
 
@@ -206,4 +206,5 @@ router.patch("/admin/users/:id/role", requireAdmin, async (req, res) => {
 });
 
 export default router;
+
 
