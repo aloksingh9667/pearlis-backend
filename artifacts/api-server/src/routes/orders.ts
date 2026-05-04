@@ -39,11 +39,16 @@ router.use(optionalAuth);
 router.get("/orders", async (req, res) => {
   try {
     const user = (req as any).user;
+    // Security: unauthenticated requests must not see any orders
+    if (!user) {
+      res.status(401).json({ error: "Authentication required" });
+      return;
+    }
     const { status, page = 1, limit = 10 } = req.query;
     const offset = (Number(page) - 1) * Number(limit);
     const conditions: any[] = [];
 
-    if (user?.role !== "admin" && user) {
+    if (user.role !== "admin") {
       conditions.push(eq(ordersTable.userId, user.id));
     }
     if (status) conditions.push(eq(ordersTable.status, status as any));
@@ -182,3 +187,4 @@ router.put("/orders/:id", requireAdmin, async (req, res) => {
 });
 
 export default router;
+
