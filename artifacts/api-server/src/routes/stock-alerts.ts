@@ -3,8 +3,11 @@ import { db } from "@workspace/db";
 import { stockAlertsTable, productsTable } from "@workspace/db";
 import { eq, and, isNull } from "drizzle-orm";
 import { sendStockAlertEmail } from "../lib/mailgun";
+import { requireAdmin } from "../lib/auth";
 
 const router = Router();
+
+const APP_URL = process.env.APP_URL || "https://pearlis.pages.dev";
 
 /* ── Public: subscribe to back-in-stock alert ── */
 router.post("/stock-alerts", async (req, res) => {
@@ -39,9 +42,7 @@ router.post("/stock-alerts", async (req, res) => {
 });
 
 /* ── Admin: list all stock alerts ── */
-router.get("/admin/stock-alerts", async (req, res) => {
-  const user = (req as any).user;
-  if (!user || user.role !== "admin") return res.status(403).json({ error: "Forbidden" });
+router.get("/admin/stock-alerts", requireAdmin, async (req, res) => {
   try {
     const rows = await db
       .select({
@@ -62,6 +63,61 @@ router.get("/admin/stock-alerts", async (req, res) => {
   } catch (err) {
     req.log.error(err);
     res.status(500).json({ error: "Failed" });
+  }
+});
+
+/* ── Admin: trigger back-in-stock notifications for a product ── */
+router.post("/admin/stock-alerts/:productId/notify", requireAdmin, async (req, res) => {
+  try {
+    const productId = parseInt(req.params.productId);
+    if (isNaN(productId)) {
+      res.status(400).json({ error: "Invalid productId" });
+      return;
+    }
+
+    const [product] = await db
+      .select()
+      .from(productsTable)
+      .where(eq(productsTable.id, productId));
+
+    if (!product) {
+      res.status(404).json({ error: "Product not found" });
+      return;
+    }
+
+    const pendingAlerts = await db
+      .select()
+      .from(stockAlertsTable)
+      .where(and(eq(stockAlertsTable.productId, productId), isNull(stockAlertsTable.notifiedAt)));
+
+    if (pendingAlerts.length === 0) {
+      res.json({ success: true, notified: 0, message: "No pending alerts for this product." });
+      return;
+    }
+
+    const productUrl = `${APP_URL}/product/${productId}`;
+    let notified = 0;
+
+    for (const alert of pendingAlerts) {
+      const sent = await sendStockAlertEmail(alert.email, product.name, productUrl);
+      if (sent) {
+        await db
+          .update(stockAlertsTable)
+          .set({ notifiedAt: new Date() })
+          .where(eq(stockAlertsTable.id, alert.id));
+        notified++;
+      }
+    }
+
+    res.json({
+      success: true,
+      notified,
+      total: pendingAlerts.length,
+      message: `Notified ${notified} of ${pendingAlerts.length} customer${pendingAlerts.length !== 1 ? "s" : ""}.`,
+    });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to send notifications" });
   }
 });
 
