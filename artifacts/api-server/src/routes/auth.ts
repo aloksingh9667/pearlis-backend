@@ -179,4 +179,31 @@ router.post("/auth/google", async (req, res) => {
   }
 });
 
+
+// Admin: update a user's role
+router.patch("/admin/users/:id/role", requireAdmin, async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const { role } = req.body;
+    if (!["user", "admin"].includes(role)) {
+      res.status(400).json({ error: "Invalid role. Must be 'user' or 'admin'." });
+      return;
+    }
+    const [updated] = await db
+      .update(usersTable)
+      .set({ role })
+      .where(eq(usersTable.id, userId))
+      .returning();
+    if (!updated) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+    res.json(toUser(updated));
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to update role" });
+  }
+});
+
 export default router;
+
