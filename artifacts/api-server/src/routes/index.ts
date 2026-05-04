@@ -23,6 +23,7 @@ import stockAlertsRouter from "./stock-alerts";
 import adminAuthRouter from "./admin-auth";
 import googleAuthRouter from "./google-auth";
 import newsletterRouter from "./newsletter";
+import reportsRouter from "./reports";
 
 const router: IRouter = Router();
 
@@ -50,5 +51,6 @@ router.use(stockAlertsRouter);
 router.use(adminAuthRouter);
 router.use(googleAuthRouter);
 router.use(newsletterRouter);
+router.use(reportsRouter);
 
 export default router;
