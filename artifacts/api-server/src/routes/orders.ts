@@ -3,7 +3,7 @@ import { db } from "@workspace/db";
 import { ordersTable, cartItemsTable, productsTable, couponsTable } from "@workspace/db";
 import { eq, desc, and, sql } from "drizzle-orm";
 import { requireAuth, optionalAuth, getSessionId, requireAdmin } from "../lib/auth";
-import { sendOrderConfirmationEmail, sendOrderStatusEmail } from "../lib/mailgun";
+import { sendOrderConfirmationEmail, sendOrderStatusEmail, sendReturnRequestStatusEmail } from "../lib/mailgun";
 
 /* ── Return Requests table (auto-created on first use) ── */
 let _returnTableReady = false;
@@ -277,6 +277,25 @@ router.patch("/admin/return-requests/:id", requireAdmin, async (req, res) => {
       SET status = ${status}, admin_note = ${adminNote ?? null}, updated_at = NOW()
       WHERE id = ${id}
     `);
+
+    // Send status email to customer for approved / rejected decisions
+    if (status === "approved" || status === "rejected") {
+      const result = await db.execute(sql`
+        SELECT customer_email, customer_name, order_id FROM return_requests WHERE id = ${id} LIMIT 1
+      `);
+      const row = result.rows?.[0] as { customer_email: string; customer_name: string; order_id: number } | undefined;
+      if (row?.customer_email) {
+        sendReturnRequestStatusEmail(
+          row.customer_email,
+          row.customer_name ?? "Valued Customer",
+          row.order_id,
+          status,
+          adminNote ?? null,
+          APP_URL,
+        ).catch(err => console.error("Return status email error:", err));
+      }
+    }
+
     res.json({ message: "Updated" });
   } catch (err) {
     req.log.error(err);
