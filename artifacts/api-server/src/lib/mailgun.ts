@@ -499,6 +499,46 @@ const RETURN_STATUS_CONFIG: Record<string, { subject: string; heading: string; c
   },
 };
 
+export async function sendPasswordResetEmail(to: string, name: string, resetLink: string): Promise<boolean> {
+  const mg = getClient();
+  if (!mg) { console.warn("Mailgun not configured"); return false; }
+  try {
+    await mg.client.messages.create(mg.domain, {
+      from: `Pearlis <noreply@${mg.domain}>`,
+      to: [to],
+      subject: "Reset Your Pearlis Password",
+      html: `
+        <div style="font-family:'Georgia',serif;max-width:520px;margin:0 auto;background:#FAF7F2;padding:48px 40px;">
+          <h1 style="font-size:26px;letter-spacing:8px;color:#0F0F0F;margin-bottom:6px;">PEARLIS</h1>
+          <p style="color:#888;font-size:10px;letter-spacing:4px;text-transform:uppercase;margin-bottom:40px;">Fine Jewellery</p>
+          <h2 style="font-size:20px;color:#0F0F0F;margin-bottom:12px;">Hello, ${name}</h2>
+          <p style="color:#555;font-size:14px;line-height:1.8;margin-bottom:28px;">
+            We received a request to reset your password. Click the button below to create a new password. This link expires in <strong>1 hour</strong>.
+          </p>
+          <div style="text-align:center;margin-bottom:32px;">
+            <a href="${resetLink}" style="display:inline-block;background:#D4AF37;color:#0F0F0F;text-decoration:none;padding:14px 36px;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:bold;">
+              Reset Password
+            </a>
+          </div>
+          <p style="color:#999;font-size:12px;line-height:1.6;margin-bottom:8px;">
+            If the button above doesn't work, copy and paste this link into your browser:
+          </p>
+          <p style="color:#D4AF37;font-size:11px;word-break:break-all;margin-bottom:28px;">${resetLink}</p>
+          <p style="color:#999;font-size:12px;line-height:1.6;">
+            If you did not request a password reset, please ignore this email. Your password will remain unchanged.
+          </p>
+          <hr style="border:none;border-top:1px solid #E5E0D8;margin:32px 0;" />
+          <p style="color:#bbb;font-size:10px;letter-spacing:2px;text-align:center;">© PEARLIS FINE JEWELLERY</p>
+        </div>
+      `,
+    });
+    return true;
+  } catch (err) {
+    console.error("Mailgun sendPasswordResetEmail error:", err);
+    return false;
+  }
+}
+
 export async function sendReturnRequestStatusEmail(
   to: string,
   customerName: string,
