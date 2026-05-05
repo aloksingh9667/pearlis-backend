@@ -2,6 +2,22 @@ import { Router } from "express";
 import { db } from "@workspace/db";
 import { ordersTable, cartItemsTable, productsTable, couponsTable } from "@workspace/db";
 import { eq, desc, and, sql } from "drizzle-orm";
+
+async function deductStockAndLog(items: Array<{ productId: number; quantity: number }>, orderId: number) {
+  try {
+    for (const item of items) {
+      const [p] = await db.select({ stock: productsTable.stock }).from(productsTable).where(eq(productsTable.id, item.productId));
+      if (!p) continue;
+      const oldStock = p.stock;
+      const newStock = Math.max(0, oldStock - item.quantity);
+      await db.update(productsTable).set({ stock: newStock }).where(eq(productsTable.id, item.productId));
+      await db.execute(sql`
+        INSERT INTO stock_history (product_id, previous_stock, new_stock, change, reason, order_id, note)
+        VALUES (${item.productId}, ${oldStock}, ${newStock}, ${newStock - oldStock}, 'order_placed', ${orderId}, ${"Order #" + orderId + " — qty " + item.quantity})
+      `);
+    }
+  } catch {}
+}
 import { requireAuth, optionalAuth, getSessionId, requireAdmin } from "../lib/auth";
 import { sendOrderConfirmationEmail, sendOrderStatusEmail, sendReturnRequestStatusEmail } from "../lib/mailgun";
 import { isEmailEnabled } from "../lib/emailSettings";
@@ -159,6 +175,9 @@ router.post("/orders", async (req, res) => {
 
     const orderData = toOrder(order);
     res.status(201).json(orderData);
+
+    // Deduct stock for each item (fire-and-forget)
+    deductStockAndLog(items.map(i => ({ productId: i.productId, quantity: i.quantity })), order.id).catch(() => {});
 
     // Fire-and-forget — do not await so the response is not delayed
     if (orderData.customerEmail) {

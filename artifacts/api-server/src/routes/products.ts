@@ -17,6 +17,44 @@ async function checkAndSendLowStockAlert(productId: number, productName: string,
   } catch {}
 }
 
+/* ── Stock History ── */
+let _stockHistoryReady = false;
+async function ensureStockHistoryTable() {
+  if (_stockHistoryReady) return;
+  await db.execute(sql`
+    CREATE TABLE IF NOT EXISTS stock_history (
+      id SERIAL PRIMARY KEY,
+      product_id INTEGER NOT NULL,
+      previous_stock INTEGER NOT NULL,
+      new_stock INTEGER NOT NULL,
+      change INTEGER NOT NULL,
+      reason TEXT NOT NULL,
+      order_id INTEGER,
+      note TEXT,
+      created_at TIMESTAMP DEFAULT NOW() NOT NULL
+    )
+  `);
+  _stockHistoryReady = true;
+}
+
+async function logStockChange(
+  productId: number,
+  previousStock: number,
+  newStock: number,
+  reason: "initial" | "manual_edit" | "order_placed",
+  orderId?: number,
+  note?: string,
+) {
+  try {
+    await ensureStockHistoryTable();
+    const change = newStock - previousStock;
+    await db.execute(sql`
+      INSERT INTO stock_history (product_id, previous_stock, new_stock, change, reason, order_id, note)
+      VALUES (${productId}, ${previousStock}, ${newStock}, ${change}, ${reason}, ${orderId ?? null}, ${note ?? null})
+    `);
+  } catch {}
+}
+
 const router = Router();
 
 function safeArr(v: any): any[] {
@@ -153,16 +191,35 @@ router.get("/products/:id/related", async (req, res) => {
   }
 });
 
+router.get("/products/:id/stock-history", requireAdmin, async (req, res) => {
+  try {
+    await ensureStockHistoryTable();
+    const id = parseInt(req.params.id);
+    const result = await db.execute(sql`
+      SELECT id, product_id, previous_stock, new_stock, change, reason, order_id, note, created_at
+      FROM stock_history
+      WHERE product_id = ${id}
+      ORDER BY created_at DESC
+      LIMIT 100
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to fetch stock history" });
+  }
+});
+
 router.post("/products", requireAdmin, async (req, res) => {
   try {
     const body = req.body;
     const slug = body.name.toLowerCase().replace(/\s+/g, "-") + "-" + Date.now();
+    const initialStock = body.stock || 0;
     const [product] = await db.insert(productsTable).values({
       name: body.name, slug, description: body.description,
       price: body.price.toString(), discountPrice: body.discountPrice?.toString() || null,
       category: body.category, categoryId: body.categoryId, material: body.material,
       images: body.images || [], videoUrl: body.videoUrl || null,
-      stock: body.stock || 0,
+      stock: initialStock,
       isNew: body.isNew ?? false, isTrending: body.isTrending ?? false,
       isFeatured: body.isFeatured ?? false, tags: body.tags || [],
       specifications: body.specifications || [],
@@ -172,6 +229,7 @@ router.post("/products", requireAdmin, async (req, res) => {
       sizes: body.sizes || [],
       materialVariants: body.materialVariants || [],
     }).returning();
+    logStockChange(product.id, 0, initialStock, "initial", undefined, "Product created").catch(() => {});
     res.status(201).json(toProduct(product));
   } catch (err) {
     req.log.error(err);
@@ -183,9 +241,10 @@ router.put("/products/:id", requireAdmin, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const body = req.body;
-    /* snapshot old stock to detect back-in-stock */
+    /* snapshot old stock to detect back-in-stock and log changes */
     const [old] = await db.select({ stock: productsTable.stock }).from(productsTable).where(eq(productsTable.id, id));
-    const wasOutOfStock = old?.stock === 0;
+    const oldStock = old?.stock ?? 0;
+    const wasOutOfStock = oldStock === 0;
 
     const [product] = await db.update(productsTable).set({
       name: body.name, description: body.description,
@@ -203,6 +262,11 @@ router.put("/products/:id", requireAdmin, async (req, res) => {
       materialVariants: body.materialVariants || [],
     }).where(eq(productsTable.id, id)).returning();
     if (!product) { res.status(404).json({ error: "Not found" }); return; }
+
+    /* log stock change if stock was modified */
+    if (body.stock !== undefined && body.stock !== oldStock) {
+      logStockChange(id, oldStock, body.stock, "manual_edit", undefined, "Admin updated product").catch(() => {});
+    }
 
     /* fire-and-forget stock alert emails if product came back in stock */
     if (wasOutOfStock && body.stock > 0) {
