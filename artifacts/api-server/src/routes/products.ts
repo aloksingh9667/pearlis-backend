@@ -1,9 +1,21 @@
 import { Router } from "express";
 import { db } from "@workspace/db";
-import { productsTable, categoriesTable } from "@workspace/db";
+import { productsTable, categoriesTable, siteSettingsTable } from "@workspace/db";
 import { eq, ilike, and, gte, lte, desc, asc, sql } from "drizzle-orm";
 import { requireAdmin } from "../lib/auth";
 import { triggerStockAlerts } from "./stock-alerts";
+import { sendLowStockAdminAlertEmail } from "../lib/mailgun";
+
+async function checkAndSendLowStockAlert(productId: number, productName: string, newStock: number) {
+  try {
+    const [setting] = await db.select().from(siteSettingsTable).where(eq(siteSettingsTable.key, "lowStockAlert"));
+    const cfg = (setting?.value as any) ?? {};
+    if (!cfg.enabled || !cfg.email || cfg.threshold == null) return;
+    if (newStock > cfg.threshold) return;
+    const appUrl = process.env.APP_URL || "https://pearlis.in";
+    await sendLowStockAdminAlertEmail(cfg.email, [{ name: productName, stock: newStock, id: productId }], appUrl);
+  } catch {}
+}
 
 const router = Router();
 
@@ -196,6 +208,11 @@ router.put("/products/:id", requireAdmin, async (req, res) => {
     if (wasOutOfStock && body.stock > 0) {
       const appUrl = process.env.APP_URL || "https://pearlis.in";
       triggerStockAlerts(id, product.name, `${appUrl}/product/${id}`).catch(() => {});
+    }
+
+    /* fire-and-forget low stock admin alert if stock dropped to/below threshold */
+    if (body.stock !== undefined) {
+      checkAndSendLowStockAlert(id, product.name, body.stock).catch(() => {});
     }
 
     res.json(toProduct(product));

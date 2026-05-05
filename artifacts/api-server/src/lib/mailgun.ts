@@ -425,6 +425,65 @@ export async function sendStockAlertEmail(to: string, productName: string, produ
   }
 }
 
+export async function sendLowStockAdminAlertEmail(
+  to: string,
+  products: { name: string; stock: number; id: number }[],
+  appUrl: string,
+): Promise<boolean> {
+  const mg = getClient();
+  if (!mg || !to) return false;
+  const rows = products.map(p => `
+    <tr>
+      <td style="padding:10px 16px;border-bottom:1px solid #222;font-size:14px;color:#fff;">${p.name}</td>
+      <td style="padding:10px 16px;border-bottom:1px solid #222;font-size:14px;text-align:center;font-weight:700;color:${p.stock === 0 ? "#ef4444" : "#f59e0b"};">${p.stock === 0 ? "OUT OF STOCK" : p.stock + " left"}</td>
+      <td style="padding:10px 16px;border-bottom:1px solid #222;font-size:13px;text-align:right;">
+        <a href="${appUrl}/admin/products" style="color:#D4AF37;text-decoration:none;">Edit →</a>
+      </td>
+    </tr>`).join("");
+  try {
+    await mg.client.messages.create(mg.domain, {
+      from: `Pearlis Admin <noreply@${mg.domain}>`,
+      to: [to],
+      subject: `⚠️ Low Stock Alert — ${products.length} product${products.length > 1 ? "s" : ""} need attention | Pearlis`,
+      html: `
+        <div style="font-family:'Georgia',serif;max-width:560px;margin:0 auto;background:#0F0F0F;padding:0;border:1px solid #222;">
+          <div style="background:#0F0F0F;padding:28px 40px;border-bottom:2px solid #D4AF37;text-align:center;">
+            <h1 style="font-size:20px;letter-spacing:10px;color:#fff;margin:0;">PEARLIS</h1>
+            <p style="color:#D4AF37;font-size:9px;letter-spacing:5px;text-transform:uppercase;margin:4px 0 0;">Admin Alert</p>
+          </div>
+          <div style="background:#1A1A1A;padding:32px 40px;">
+            <div style="background:#f59e0b22;border-left:3px solid #f59e0b;padding:14px 18px;margin-bottom:24px;">
+              <p style="margin:0;font-size:14px;color:#f59e0b;font-weight:bold;">⚠️ Low Stock Warning</p>
+              <p style="margin:6px 0 0;font-size:13px;color:#aaa;">The following product${products.length > 1 ? "s are" : " is"} running low and may need restocking.</p>
+            </div>
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #333;">
+              <thead>
+                <tr style="background:#111;">
+                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;text-align:left;">Product</th>
+                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;text-align:center;">Stock</th>
+                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;text-align:right;">Action</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+            <div style="text-align:center;margin-top:28px;">
+              <a href="${appUrl}/admin/products" style="display:inline-block;background:#D4AF37;color:#0F0F0F;text-decoration:none;padding:14px 36px;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:bold;">Manage Products</a>
+            </div>
+          </div>
+          <div style="background:#0F0F0F;padding:16px 40px;text-align:center;border-top:1px solid #222;">
+            <p style="color:#444;font-size:10px;letter-spacing:2px;margin:0;">© PEARLIS FINE JEWELLERY — ADMIN ALERT</p>
+          </div>
+        </div>
+      `,
+    });
+    console.info(`Low stock admin alert sent to ${to} for ${products.length} product(s)`);
+    return true;
+  } catch (err) {
+    console.error("Mailgun sendLowStockAdminAlertEmail error:", err);
+    return false;
+  }
+}
+
 export async function sendPasswordResetEmail(to: string, name: string, resetLink: string): Promise<boolean> {
   const mg = getClient();
   if (!mg) { console.warn("Mailgun not configured"); return false; }

@@ -38,6 +38,11 @@ const DEFAULT_SETTINGS: Record<string, any> = {
     intervalMinutes: 14,
     pingUrl: "",
   },
+  lowStockAlert: {
+    enabled: false,
+    threshold: 5,
+    email: "",
+  },
   contact: {
     email: "concierge@pearlis.com",
     phone: "+91 98765 43210",
