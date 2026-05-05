@@ -1,1 +1,213 @@
-aW1wb3J0IHsgUm91dGVyIH0gZnJvbSAiZXhwcmVzcyI7CmltcG9ydCB7IGRiIH0gZnJvbSAiQHdvcmtzcGFjZS9kYiI7CmltcG9ydCB7IHNpdGVTZXR0aW5nc1RhYmxlIH0gZnJvbSAiQHdvcmtzcGFjZS9kYiI7CmltcG9ydCB7IGVxIH0gZnJvbSAiZHJpenpsZS1vcm0iOwppbXBvcnQgeyByZXF1aXJlQWRtaW4gfSBmcm9tICIuLi9saWIvYXV0aCI7Cgpjb25zdCByb3V0ZXIgPSBSb3V0ZXIoKTsKCi8vIERlZmF1bHQgc2V0dGluZ3Mgc2VlZGVkIG9uIGZpcnN0IHJlcXVlc3QKY29uc3QgREVGQVVMVF9TRVRUSU5HUzogUmVjb3JkPHN0cmluZywgYW55PiA9IHsKICBicmFuZGluZzogewogICAgc2l0ZU5hbWU6ICJQZWFybGlzIiwKICAgIHRhZ2xpbmU6ICJGaW5lIEpld2VsbGVyeSIsCiAgICBsb2dvVXJsOiAiIiwKICAgIGZhdmljb25Vcmw6ICIiLAogIH0sCiAgZ2VuZXJhbDogewogICAgc2l0ZU5hbWU6ICJQZWFybGlzIiwKICAgIHRhZ2xpbmU6ICJGaW5lIEpld2VsbGVyeSIsCiAgICBjdXJyZW5jeTogIklOUiIsCiAgICBjdXJyZW5jeVN5bWJvbDogIuKCuSIsCiAgICBjb252ZXJzaW9uUmF0ZTogODMsCiAgfSwKICBhbm5vdW5jZW1lbnQ6IHsKICAgIGVuYWJsZWQ6IHRydWUsCiAgICB0ZXh0OiAiRlJFRSBTSElQUElORyBBQk9WRSDigrk1LDAwMCB8IENPREUgUEVBUkxJUzEwIEZPUiAxMCUgT0ZGIiwKICAgIGxpbms6ICIvc2hvcCIsCiAgfSwKICBwYXltZW50OiB7CiAgICBjb2RFbmFibGVkOiB0cnVlLAogICAgcmF6b3JwYXlFbmFibGVkOiBmYWxzZSwKICAgIHJhem9ycGF5TW9kZTogInRlc3QiLAogICAgcmF6b3JwYXlLZXlJZDogIiIsCiAgICByYXpvcnBheVRlc3RLZXlJZDogIiIsCiAgfSwKICBrZWVwQWxpdmU6IHsKICAgIGVuYWJsZWQ6IGZhbHNlLAogICAgaW50ZXJ2YWxNaW51dGVzOiAxNCwKICAgIHBpbmdVcmw6ICIiLAogIH0sCiAgbG93U3RvY2tBbGVydDogewogICAgZW5hYmxlZDogZmFsc2UsCiAgICB0aHJlc2hvbGQ6IDUsCiAgICBlbWFpbDogIiIsCiAgfSwKICBjb250YWN0OiB7CiAgICBlbWFpbDogImNvbmNpZXJnZUBwZWFybGlzLmNvbSIsCiAgICBwaG9uZTogIis5MSA5ODc2NSA0MzIxMCIsCiAgICBhZGRyZXNzOiAiMTI0IEx1eHVyeSBMYW5lLCBNdW1iYWksIE1haGFyYXNodHJhIDQwMDAwMSwgSW5kaWEiLAogICAgaG91cnM6ICJNb24tU2F0IDEwYW0tN3BtIElTVCIsCiAgICB3aGF0c2FwcDogIis5MSA5ODc2NSA0MzIxMCIsCiAgfSwKICBzb2NpYWw6IHsKICAgIGluc3RhZ3JhbTogImh0dHBzOi8vaW5zdGFncmFtLmNvbS9wZWFybGlzamV3ZWxzIiwKICAgIGZhY2Vib29rOiAiaHR0cHM6Ly9mYWNlYm9vay5jb20vcGVhcmxpc2pld2VscyIsCiAgICB0d2l0dGVyOiAiaHR0cHM6Ly90d2l0dGVyLmNvbS9wZWFybGlzamV3ZWxzIiwKICAgIHBpbnRlcmVzdDogImh0dHBzOi8vcGludGVyZXN0LmNvbS9wZWFybGlzamV3ZWxzIiwKICAgIHlvdXR1YmU6ICIiLAogIH0sCiAgaW5zdGFncmFtOiB7CiAgICBlbmFibGVkOiB0cnVlLAogICAgdXNlcm5hbWU6ICJwZWFybGlzamV3ZWxzIiwKICAgIHBvc3RzOiBbXSBhcyBzdHJpbmdbXSwKICB9LAogIHZpZGVvczogW10gYXMgQXJyYXk8eyB0aXRsZTogc3RyaW5nOyB1cmw6IHN0cmluZzsgdGh1bWJuYWlsOiBzdHJpbmcgfT4sCiAgYXRlbGllclZpZGVvOiAiIiwKICBmbGFzaFNhbGU6IHsKICAgIGVuYWJsZWQ6IGZhbHNlLAogICAgdGl0bGU6ICJGbGFzaCBTYWxlIiwKICAgIHN1YnRpdGxlOiAiVXAgdG8gMzAlIE9mZiIsCiAgICBwcm9tb1RleHQ6ICJUb2RheSBPbmx5IOKAlCBVc2UgY29kZSBQRUFSTElTMTAgYXQgY2hlY2tvdXQiLAogICAgZW5kc0F0OiBuZXcgRGF0ZShEYXRlLm5vdygpICsgMyAqIDI0ICogNjAgKiA2MCAqIDEwMDApLnRvSVNPU3RyaW5nKCksCiAgICBjb2RlOiAiUEVBUkxJUzEwIiwKICAgIGN0YVRleHQ6ICJTaG9wIHRoZSBTYWxlIiwKICAgIGN0YUxpbms6ICIvc2hvcCIsCiAgfSwKICBob21lU2FsZTogewogICAgZW5hYmxlZDogdHJ1ZSwKICAgIGJhZGdlOiAiTGltaXRlZCBUaW1lIE9mZmVyIiwKICAgIG9mZmVyTGluZTogIkZsYXQgMjAlIE9GRiIsCiAgICBzdWJ0aXRsZTogIlRvZGF5IE9ubHkiLAogICAgcHJvbW9UZXh0OiAiVXNlIGNvZGUgUEVBUkxJUzEwIGF0IGNoZWNrb3V0IGFuZCBzYXZlIG9uIG91ciBmaW5lc3QgcGllY2VzLiIsCiAgICBjb2RlOiAiUEVBUkxJUzEwIiwKICAgIGN0YVRleHQ6ICJTaG9wIHRoZSBTYWxlIiwKICAgIGN0YUxpbms6ICIvc2hvcCIsCiAgICBlbmRzQXQ6IG5ldyBEYXRlKERhdGUubm93KCkgKyAyICogMjQgKiA2MCAqIDYwICogMTAwMCkudG9JU09TdHJpbmcoKSwKICB9LAogIHNob3BGaWx0ZXJzOiB7CiAgICBwcmljZVJhbmdlczogWwogICAgICB7IGxhYmVsOiAiVW5kZXIg4oK5NSwwMDAiLCBtaW5JTlI6IDAsIG1heElOUjogNTAwMCB9LAogICAgICB7IGxhYmVsOiAi4oK5NSwwMDAg4oCTIOKCuTE1LDAwMCIsIG1pbklOUjogNTAwMCwgbWF4SU5SOiAxNTAwMCB9LAogICAgICB7IGxhYmVsOiAi4oK5MTUsMDAwIOKAkyDigrk1MCwwMDAiLCBtaW5JTlI6IDE1MDAwLCBtYXhJTlI6IDUwMDAwIH0sCiAgICAgIHsgbGFiZWw6ICLigrk1MCwwMDAg4oCTIOKCuTEsMDAsMDAwIiwgbWluSU5SOiA1MDAwMCwgbWF4SU5SOiAxMDAwMDAgfSwKICAgICAgeyBsYWJlbDogIkFib3ZlIOKCuTEsMDAsMDAwIiwgbWluSU5SOiAxMDAwMDAsIG1heElOUjogOTk5OTk5OSB9LAogICAgXSwKICAgIG1hdGVyaWFsczogWyJHb2xkIiwgIlNpbHZlciIsICJQbGF0aW51bSIsICJSb3NlIEdvbGQiLCAiRGlhbW9uZCIsICJQZWFybCIsICJHZW1zdG9uZSJdLAogIH0sCiAgbmF2YmFyQ2F0ZWdvcmllczogewogICAgZXhjbHVkZWRTbHVnczogW10gYXMgc3RyaW5nW10sCiAgfSwKICBlbWFpbE5vdGlmaWNhdGlvbnM6IHsKICAgIG9yZGVyQ29uZmlybWF0aW9uOiB0cnVlLAogICAgb3JkZXJTdGF0dXNVcGRhdGU6IHRydWUsCiAgICByZXR1cm5TdGF0dXNVcGRhdGU6IHRydWUsCiAgICBzdG9ja0FsZXJ0OiB0cnVlLAogICAgb3RwVmVyaWZpY2F0aW9uOiB0cnVlLAogICAgcGFzc3dvcmRSZXNldDogdHJ1ZSwKICB9LAogIHNpemVHdWlkZTogewogICAgcmluZ1RpcDogIldyYXAgYSB0aGluIHN0cmlwIG9mIHBhcGVyIGFyb3VuZCB5b3VyIGZpbmdlciwgbWFyayB3aGVyZSBpdCBvdmVybGFwcywgYW5kIG1lYXN1cmUgdGhlIGxlbmd0aCBpbiBtbS4gTWF0Y2ggaXQgdG8gdGhlIGNpcmN1bWZlcmVuY2UgY29sdW1uIGJlbG93LiIsCiAgICByaW5nV2FyblRpcDogIk1lYXN1cmUgYXQgdGhlIGVuZCBvZiB0aGUgZGF5IHdoZW4gZmluZ2VycyBhcmUgYXQgdGhlaXIgbGFyZ2VzdC4gSWYgYmV0d2VlbiBzaXplcywgY2hvb3NlIHRoZSBsYXJnZXIgc2l6ZS4iLAogICAgYnJhY2VsZXRUaXA6ICJVc2UgYSBzb2Z0IG1lYXN1cmluZyB0YXBlIG9yIGEgc3RyaXAgb2YgcGFwZXIgdG8gbWVhc3VyZSBhcm91bmQgeW91ciB3cmlzdCBqdXN0IGJlbG93IHRoZSB3cmlzdCBib25lLiBBZGQgMeKAkzIgY20gZm9yIGEgY29tZm9ydGFibGUgZml0LiIsCiAgICBicmFjZWxldFdhcm5UaXA6ICJGb3IgYmFuZ2xlcywgbWVhc3VyZSB0aGUgd2lkZXN0IHBhcnQgb2YgeW91ciBoYW5kIChrbnVja2xlcykgd2hlbiBmaW5nZXJzIGFyZSBwcmVzc2VkIHRvZ2V0aGVyLiIsCiAgICBuZWNrbGFjZVRpcDogIk5lY2tsYWNlIGxlbmd0aCBpcyBtZWFzdXJlZCBmcm9tIGVuZCB0byBlbmQgaW5jbHVkaW5nIHRoZSBjbGFzcC4gVGhlIHN0eWxlIGl0IGNyZWF0ZXMgZGVwZW5kcyBvbiB5b3VyIG5lY2tsaW5lIGFuZCBib2R5IHR5cGUuIiwKICAgIHJpbmdSb3dzOiBbCiAgICAgIHsgaW46ICI1IiwgIHVzOiAiNSIsICBtbTogIjQ5LjMiLCBpbmNoOiAiMS45NFwiIiB9LAogICAgICB7IGluOiAiNiIsICB1czogIjYiLCAgbW06ICI1MS45IiwgaW5jaDogIjIuMDRcIiIgfSwKICAgICAgeyBpbjogIjciLCAgdXM6ICI3IiwgIG1tOiAiNTQuNCIsIGluY2g6ICIyLjE0XCIiIH0sCiAgICAgIHsgaW46ICI4IiwgIHVzOiAiOCIsICBtbTogIjU3LjAiLCBpbmNoOiAiMi4yNFwiIiB9LAogICAgICB7IGluOiAiOSIsICB1czogIjkiLCAgbW06ICI1OS41IiwgaW5jaDogIjIuMzRcIiIgfSwKICAgICAgeyBpbjogIjEwIiwgdXM6ICIxMCIsIG1tOiAiNjIuMSIsIGluY2g6ICIyLjQ0XCIiIH0sCiAgICAgIHsgaW46ICIxMSIsIHVzOiAiMTEiLCBtbTogIjY0LjYiLCBpbmNoOiAiMi41NFwiIiB9LAogICAgICB7IGluOiAiMTIiLCB1czogIjEyIiwgbW06ICI2Ny4yIiwgaW5jaDogIjIuNjVcIiIgfSwKICAgIF0sCiAgICBicmFjZWxldFJvd3M6IFsKICAgICAgeyBsYWJlbDogIlhTIiwgIHdyaXN0OiAiMTPigJMxNCBjbSIsIGZpdDogIlNudWcgZml0IiB9LAogICAgICB7IGxhYmVsOiAiUyIsICAgd3Jpc3Q6ICIxNeKAkzE2IGNtIiwgZml0OiAiUmVndWxhciBmaXQiIH0sCiAgICAgIHsgbGFiZWw6ICJNIiwgICB3cmlzdDogIjE24oCTMTcgY20iLCBmaXQ6ICJSZWd1bGFyIGZpdCIgfSwKICAgICAgeyBsYWJlbDogIkwiLCAgIHdyaXN0OiAiMTfigJMxOCBjbSIsIGZpdDogIlJlbGF4ZWQgZml0IiB9LAogICAgICB7IGxhYmVsOiAiWEwiLCAgd3Jpc3Q6ICIxOOKAkzE5IGNtIiwgZml0OiAiUmVsYXhlZCBmaXQiIH0sCiAgICAgIHsgbGFiZWw6ICJYWEwiLCB3cmlzdDogIjE54oCTMjEgY20iLCBmaXQ6ICJMb29zZSBmaXQiIH0sCiAgICBdLAogICAgbmVja2xhY2VSb3dzOiBbCiAgICAgIHsgbGVuZ3RoOiAiMTRcIiAvIDM1IGNtIiwgc3R5bGU6ICJDaG9rZXIiLCAgIGRlc2NyaXB0aW9uOiAiU2l0cyBhdCBiYXNlIG9mIG5lY2siIH0sCiAgICAgIHsgbGVuZ3RoOiAiMTZcIiAvIDQwIGNtIiwgc3R5bGU6ICJDb2xsYXIiLCAgIGRlc2NyaXB0aW9uOiAiSnVzdCBiZWxvdyBjb2xsYXJib25lIiB9LAogICAgICB7IGxlbmd0aDogIjE4XCIgLyA0NSBjbSIsIHN0eWxlOiAiUHJpbmNlc3MiLCBkZXNjcmlwdGlvbjogIk1vc3QgcG9wdWxhciBsZW5ndGgiIH0sCiAgICAgIHsgbGVuZ3RoOiAiMjBcIiAvIDUwIGNtIiwgc3R5bGU6ICJNYXRpbmVlIiwgIGRlc2NyaXB0aW9uOiAiSGl0cyB0b3Agb2YgY2hlc3QiIH0sCiAgICAgIHsgbGVuZ3RoOiAiMjRcIiAvIDYwIGNtIiwgc3R5bGU6ICJPcGVyYSIsICAgIGRlc2NyaXB0aW9uOiAiTWlkLWNoZXN0IGRyYXBlIiB9LAogICAgICB7IGxlbmd0aDogIjMwXCIgLyA3NiBjbSIsIHN0eWxlOiAiUm9wZSIsICAgICBkZXNjcmlwdGlvbjogIkJlbG93IGJ1c3QgbGluZSIgfSwKICAgIF0sCiAgfSwKfTsKCmFzeW5jIGZ1bmN0aW9uIGVuc3VyZVNldHRpbmdzKCkgewogIGZvciAoY29uc3QgW2tleSwgdmFsdWVdIG9mIE9iamVjdC5lbnRyaWVzKERFRkFVTFRfU0VUVElOR1MpKSB7CiAgICBjb25zdCBleGlzdGluZyA9IGF3YWl0IGRiLnNlbGVjdCgpLmZyb20oc2l0ZVNldHRpbmdzVGFibGUpLndoZXJlKGVxKHNpdGVTZXR0aW5nc1RhYmxlLmtleSwga2V5KSk7CiAgICBpZiAoZXhpc3RpbmcubGVuZ3RoID09PSAwKSB7CiAgICAgIGF3YWl0IGRiLmluc2VydChzaXRlU2V0dGluZ3NUYWJsZSkudmFsdWVzKHsga2V5LCB2YWx1ZSB9KTsKICAgIH0KICB9Cn0KCi8vIEdFVCBhbGwgc2V0dGluZ3MgKHB1YmxpYykKcm91dGVyLmdldCgiL3NldHRpbmdzIiwgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgdHJ5IHsKICAgIGF3YWl0IGVuc3VyZVNldHRpbmdzKCk7CiAgICBjb25zdCBzZXR0aW5ncyA9IGF3YWl0IGRiLnNlbGVjdCgpLmZyb20oc2l0ZVNldHRpbmdzVGFibGUpOwogICAgY29uc3QgcmVzdWx0OiBSZWNvcmQ8c3RyaW5nLCBhbnk+ID0ge307CiAgICBmb3IgKGNvbnN0IHMgb2Ygc2V0dGluZ3MpIHsKICAgICAgcmVzdWx0W3Mua2V5XSA9IHMudmFsdWU7CiAgICB9CiAgICByZXMuanNvbihyZXN1bHQpOwogIH0gY2F0Y2ggKGVycikgewogICAgcmVxLmxvZy5lcnJvcihlcnIpOwogICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBlcnJvcjogIkZhaWxlZCB0byBnZXQgc2V0dGluZ3MiIH0pOwogIH0KfSk7CgovLyBHRVQgc2luZ2xlIHNldHRpbmcgYnkga2V5IChwdWJsaWMpCnJvdXRlci5nZXQoIi9zZXR0aW5ncy86a2V5IiwgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgdHJ5IHsKICAgIGNvbnN0IFtzZXR0aW5nXSA9IGF3YWl0IGRiLnNlbGVjdCgpLmZyb20oc2l0ZVNldHRpbmdzVGFibGUpLndoZXJlKGVxKHNpdGVTZXR0aW5nc1RhYmxlLmtleSwgcmVxLnBhcmFtcy5rZXkpKTsKICAgIGlmICghc2V0dGluZykgewogICAgICBjb25zdCBkZWZhdWx0VmFsID0gREVGQVVMVF9TRVRUSU5HU1tyZXEucGFyYW1zLmtleV07CiAgICAgIGlmIChkZWZhdWx0VmFsICE9PSB1bmRlZmluZWQpIHsKICAgICAgICByZXMuanNvbih7IGtleTogcmVxLnBhcmFtcy5rZXksIHZhbHVlOiBkZWZhdWx0VmFsIH0pOwogICAgICAgIHJldHVybjsKICAgICAgfQogICAgICByZXMuc3RhdHVzKDQwNCkuanNvbih7IGVycm9yOiAiU2V0dGluZyBub3QgZm91bmQiIH0pOwogICAgICByZXR1cm47CiAgICB9CiAgICByZXMuanNvbih7IGtleTogc2V0dGluZy5rZXksIHZhbHVlOiBzZXR0aW5nLnZhbHVlIH0pOwogIH0gY2F0Y2ggKGVycikgewogICAgcmVxLmxvZy5lcnJvcihlcnIpOwogICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBlcnJvcjogIkZhaWxlZCIgfSk7CiAgfQp9KTsKCi8vIFBVVCBzaW5nbGUgc2V0dGluZyAoYWRtaW4gb25seSkKcm91dGVyLnB1dCgiL3NldHRpbmdzLzprZXkiLCByZXF1aXJlQWRtaW4sIGFzeW5jIChyZXEsIHJlcykgPT4gewogIHRyeSB7CiAgICBjb25zdCB7IHZhbHVlIH0gPSByZXEuYm9keTsKICAgIGNvbnN0IGV4aXN0aW5nID0gYXdhaXQgZGIuc2VsZWN0KCkuZnJvbShzaXRlU2V0dGluZ3NUYWJsZSkud2hlcmUoZXEoc2l0ZVNldHRpbmdzVGFibGUua2V5LCByZXEucGFyYW1zLmtleSkpOwogICAgaWYgKGV4aXN0aW5nLmxlbmd0aCA9PT0gMCkgewogICAgICBjb25zdCBbc2V0dGluZ10gPSBhd2FpdCBkYi5pbnNlcnQoc2l0ZVNldHRpbmdzVGFibGUpLnZhbHVlcyh7CiAgICAgICAga2V5OiByZXEucGFyYW1zLmtleSwKICAgICAgICB2YWx1ZSwKICAgICAgfSkucmV0dXJuaW5nKCk7CiAgICAgIHJlcy5qc29uKHsga2V5OiBzZXR0aW5nLmtleSwgdmFsdWU6IHNldHRpbmcudmFsdWUgfSk7CiAgICB9IGVsc2UgewogICAgICBjb25zdCBbc2V0dGluZ10gPSBhd2FpdCBkYi51cGRhdGUoc2l0ZVNldHRpbmdzVGFibGUpCiAgICAgICAgLnNldCh7IHZhbHVlLCB1cGRhdGVkQXQ6IG5ldyBEYXRlKCkgfSkKICAgICAgICAud2hlcmUoZXEoc2l0ZVNldHRpbmdzVGFibGUua2V5LCByZXEucGFyYW1zLmtleSkpCiAgICAgICAgLnJldHVybmluZygpOwogICAgICByZXMuanNvbih7IGtleTogc2V0dGluZy5rZXksIHZhbHVlOiBzZXR0aW5nLnZhbHVlIH0pOwogICAgfQogIH0gY2F0Y2ggKGVycikgewogICAgcmVxLmxvZy5lcnJvcihlcnIpOwogICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBlcnJvcjogIkZhaWxlZCB0byB1cGRhdGUgc2V0dGluZyIgfSk7CiAgfQp9KTsKCmV4cG9ydCBkZWZhdWx0IHJvdXRlcjsK
+import { Router } from "express";
+import { db } from "@workspace/db";
+import { siteSettingsTable } from "@workspace/db";
+import { eq } from "drizzle-orm";
+import { requireAdmin } from "../lib/auth";
+
+const router = Router();
+
+// Default settings seeded on first request
+const DEFAULT_SETTINGS: Record<string, any> = {
+  branding: {
+    siteName: "Pearlis",
+    tagline: "Fine Jewellery",
+    logoUrl: "",
+    faviconUrl: "",
+  },
+  general: {
+    siteName: "Pearlis",
+    tagline: "Fine Jewellery",
+    currency: "INR",
+    currencySymbol: "₹",
+    conversionRate: 83,
+  },
+  announcement: {
+    enabled: true,
+    text: "FREE SHIPPING ABOVE ₹5,000 | CODE PEARLIS10 FOR 10% OFF",
+    link: "/shop",
+  },
+  payment: {
+    codEnabled: true,
+    razorpayEnabled: false,
+    razorpayMode: "test",
+    razorpayKeyId: "",
+    razorpayTestKeyId: "",
+  },
+  keepAlive: {
+    enabled: false,
+    intervalMinutes: 14,
+    pingUrl: "",
+  },
+  lowStockAlert: {
+    enabled: false,
+    threshold: 5,
+    email: "",
+  },
+  contact: {
+    email: "concierge@pearlis.com",
+    phone: "+91 98765 43210",
+    address: "124 Luxury Lane, Mumbai, Maharashtra 400001, India",
+    hours: "Mon-Sat 10am-7pm IST",
+    whatsapp: "+91 98765 43210",
+  },
+  social: {
+    instagram: "https://instagram.com/pearlisjewels",
+    facebook: "https://facebook.com/pearlisjewels",
+    twitter: "https://twitter.com/pearlisjewels",
+    pinterest: "https://pinterest.com/pearlisjewels",
+    youtube: "",
+  },
+  instagram: {
+    enabled: true,
+    username: "pearlisjewels",
+    posts: [] as string[],
+  },
+  videos: [] as Array<{ title: string; url: string; thumbnail: string }>,
+  atelierVideo: "",
+  flashSale: {
+    enabled: false,
+    title: "Flash Sale",
+    subtitle: "Up to 30% Off",
+    promoText: "Today Only — Use code PEARLIS10 at checkout",
+    endsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    code: "PEARLIS10",
+    ctaText: "Shop the Sale",
+    ctaLink: "/shop",
+  },
+  homeSale: {
+    enabled: true,
+    badge: "Limited Time Offer",
+    offerLine: "Flat 20% OFF",
+    subtitle: "Today Only",
+    promoText: "Use code PEARLIS10 at checkout and save on our finest pieces.",
+    code: "PEARLIS10",
+    ctaText: "Shop the Sale",
+    ctaLink: "/shop",
+    endsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  shopFilters: {
+    priceRanges: [
+      { label: "Under ₹5,000", minINR: 0, maxINR: 5000 },
+      { label: "₹5,000 – ₹15,000", minINR: 5000, maxINR: 15000 },
+      { label: "₹15,000 – ₹50,000", minINR: 15000, maxINR: 50000 },
+      { label: "₹50,000 – ₹1,00,000", minINR: 50000, maxINR: 100000 },
+      { label: "Above ₹1,00,000", minINR: 100000, maxINR: 9999999 },
+    ],
+    materials: ["Gold", "Silver", "Platinum", "Rose Gold", "Diamond", "Pearl", "Gemstone"],
+  },
+  navbarCategories: {
+    excludedSlugs: [] as string[],
+  },
+  emailNotifications: {
+    orderConfirmation: true,
+    orderStatusUpdate: true,
+    returnStatusUpdate: true,
+    stockAlert: true,
+    otpVerification: true,
+    passwordReset: true,
+  },
+  sizeGuide: {
+    ringTip: "Wrap a thin strip of paper around your finger, mark where it overlaps, and measure the length in mm. Match it to the circumference column below.",
+    ringWarnTip: "Measure at the end of the day when fingers are at their largest. If between sizes, choose the larger size.",
+    braceletTip: "Use a soft measuring tape or a strip of paper to measure around your wrist just below the wrist bone. Add 1–2 cm for a comfortable fit.",
+    braceletWarnTip: "For bangles, measure the widest part of your hand (knuckles) when fingers are pressed together.",
+    necklaceTip: "Necklace length is measured from end to end including the clasp. The style it creates depends on your neckline and body type.",
+    ringRows: [
+      { in: "5",  us: "5",  mm: "49.3", inch: "1.94\"" },
+      { in: "6",  us: "6",  mm: "51.9", inch: "2.04\"" },
+      { in: "7",  us: "7",  mm: "54.4", inch: "2.14\"" },
+      { in: "8",  us: "8",  mm: "57.0", inch: "2.24\"" },
+      { in: "9",  us: "9",  mm: "59.5", inch: "2.34\"" },
+      { in: "10", us: "10", mm: "62.1", inch: "2.44\"" },
+      { in: "11", us: "11", mm: "64.6", inch: "2.54\"" },
+      { in: "12", us: "12", mm: "67.2", inch: "2.65\"" },
+    ],
+    braceletRows: [
+      { label: "XS",  wrist: "13–14 cm", fit: "Snug fit" },
+      { label: "S",   wrist: "15–16 cm", fit: "Regular fit" },
+      { label: "M",   wrist: "16–17 cm", fit: "Regular fit" },
+      { label: "L",   wrist: "17–18 cm", fit: "Relaxed fit" },
+      { label: "XL",  wrist: "18–19 cm", fit: "Relaxed fit" },
+      { label: "XXL", wrist: "19–21 cm", fit: "Loose fit" },
+    ],
+    necklaceRows: [
+      { length: "14\" / 35 cm", style: "Choker",   description: "Sits at base of neck" },
+      { length: "16\" / 40 cm", style: "Collar",   description: "Just below collarbone" },
+      { length: "18\" / 45 cm", style: "Princess", description: "Most popular length" },
+      { length: "20\" / 50 cm", style: "Matinee",  description: "Hits top of chest" },
+      { length: "24\" / 60 cm", style: "Opera",    description: "Mid-chest drape" },
+      { length: "30\" / 76 cm", style: "Rope",     description: "Below bust line" },
+    ],
+  },
+};
+
+async function ensureSettings() {
+  for (const [key, value] of Object.entries(DEFAULT_SETTINGS)) {
+    const existing = await db.select().from(siteSettingsTable).where(eq(siteSettingsTable.key, key));
+    if (existing.length === 0) {
+      await db.insert(siteSettingsTable).values({ key, value });
+    }
+  }
+}
+
+// GET all settings (public)
+router.get("/settings", async (req, res) => {
+  try {
+    await ensureSettings();
+    const settings = await db.select().from(siteSettingsTable);
+    const result: Record<string, any> = {};
+    for (const s of settings) {
+      result[s.key] = s.value;
+    }
+    res.json(result);
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to get settings" });
+  }
+});
+
+// GET single setting by key (public)
+router.get("/settings/:key", async (req, res) => {
+  try {
+    const [setting] = await db.select().from(siteSettingsTable).where(eq(siteSettingsTable.key, req.params.key));
+    if (!setting) {
+      const defaultVal = DEFAULT_SETTINGS[req.params.key];
+      if (defaultVal !== undefined) {
+        res.json({ key: req.params.key, value: defaultVal });
+        return;
+      }
+      res.status(404).json({ error: "Setting not found" });
+      return;
+    }
+    res.json({ key: setting.key, value: setting.value });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed" });
+  }
+});
+
+// PUT single setting (admin only)
+router.put("/settings/:key", requireAdmin, async (req, res) => {
+  try {
+    const { value } = req.body;
+    const existing = await db.select().from(siteSettingsTable).where(eq(siteSettingsTable.key, req.params.key));
+    if (existing.length === 0) {
+      const [setting] = await db.insert(siteSettingsTable).values({
+        key: req.params.key,
+        value,
+      }).returning();
+      res.json({ key: setting.key, value: setting.value });
+    } else {
+      const [setting] = await db.update(siteSettingsTable)
+        .set({ value, updatedAt: new Date() })
+        .where(eq(siteSettingsTable.key, req.params.key))
+        .returning();
+      res.json({ key: setting.key, value: setting.value });
+    }
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to update setting" });
+  }
+});
+
+export default router;

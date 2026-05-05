@@ -1,1 +1,198 @@
-aW1wb3J0IHsgUm91dGVyIH0gZnJvbSAiZXhwcmVzcyI7CmltcG9ydCBiY3J5cHQgZnJvbSAiYmNyeXB0anMiOwppbXBvcnQgY3J5cHRvIGZyb20gImNyeXB0byI7CmltcG9ydCB7IGRiIH0gZnJvbSAiQHdvcmtzcGFjZS9kYiI7CmltcG9ydCB7IHVzZXJzVGFibGUsIGVtYWlsT3Rwc1RhYmxlLCBwYXNzd29yZFJlc2V0VG9rZW5zVGFibGUgfSBmcm9tICJAd29ya3NwYWNlL2RiIjsKaW1wb3J0IHsgZXEsIGFuZCwgZ3QgfSBmcm9tICJkcml6emxlLW9ybSI7CmltcG9ydCB7IHNpZ25Ub2tlbiB9IGZyb20gIi4uL2xpYi9hdXRoIjsKaW1wb3J0IHsgc2VuZE90cEVtYWlsLCBzZW5kUGFzc3dvcmRSZXNldEVtYWlsIH0gZnJvbSAiLi4vbGliL21haWxndW4iOwppbXBvcnQgeyBpc0VtYWlsRW5hYmxlZCB9IGZyb20gIi4uL2xpYi9lbWFpbFNldHRpbmdzIjsKCmNvbnN0IHJvdXRlciA9IFJvdXRlcigpOwoKZnVuY3Rpb24gZ2VuZXJhdGVPdHAoKTogc3RyaW5nIHsKICByZXR1cm4gTWF0aC5mbG9vcigxMDAwMDAgKyBNYXRoLnJhbmRvbSgpICogOTAwMDAwKS50b1N0cmluZygpOwp9CgpmdW5jdGlvbiBnZW5lcmF0ZVRva2VuKCk6IHN0cmluZyB7CiAgcmV0dXJuIGNyeXB0by5yYW5kb21CeXRlcygzMikudG9TdHJpbmcoImhleCIpOwp9CgpmdW5jdGlvbiBnZXRBcHBVcmwocmVxOiBhbnkpOiBzdHJpbmcgewogIGNvbnN0IGhvc3QgPSByZXEuaGVhZGVyc1sieC1mb3J3YXJkZWQtaG9zdCJdIHx8IHJlcS5oZWFkZXJzLmhvc3QgfHwgImxvY2FsaG9zdDo4MDgxIjsKICBjb25zdCBwcm90byA9IHJlcS5oZWFkZXJzWyJ4LWZvcndhcmRlZC1wcm90byJdIHx8ICJodHRwcyI7CiAgcmV0dXJuIGAke3Byb3RvfTovLyR7aG9zdH1gOwp9CgpmdW5jdGlvbiB0b1VzZXIodTogYW55KSB7CiAgcmV0dXJuIHsgaWQ6IHUuaWQsIGVtYWlsOiB1LmVtYWlsLCBuYW1lOiB1Lm5hbWUsIGF2YXRhcjogdS5hdmF0YXIsIHJvbGU6IHUucm9sZSwgY3JlYXRlZEF0OiB1LmNyZWF0ZWRBdD8udG9JU09TdHJpbmcoKSB9Owp9CgovLyBQT1NUIC9hdXRoL3NlbmQtb3RwIOKAlCBzZW5kIE9UUCBmb3IgZW1haWwgdmVyaWZpY2F0aW9uIGR1cmluZyBzaWdudXAKcm91dGVyLnBvc3QoIi9hdXRoL3NlbmQtb3RwIiwgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgdHJ5IHsKICAgIGNvbnN0IHsgZW1haWwsIG5hbWUgfSA9IHJlcS5ib2R5OwogICAgaWYgKCFlbWFpbCkgeyByZXMuc3RhdHVzKDQwMCkuanNvbih7IGVycm9yOiAiRW1haWwgaXMgcmVxdWlyZWQiIH0pOyByZXR1cm47IH0KCiAgICAvLyBDaGVjayBpZiBlbWFpbCBhbHJlYWR5IHJlZ2lzdGVyZWQKICAgIGNvbnN0IFtleGlzdGluZ10gPSBhd2FpdCBkYi5zZWxlY3QoKS5mcm9tKHVzZXJzVGFibGUpLndoZXJlKGVxKHVzZXJzVGFibGUuZW1haWwsIGVtYWlsKSk7CiAgICBpZiAoZXhpc3RpbmcpIHsKICAgICAgcmVzLnN0YXR1cyg0MDkpLmpzb24oeyBlcnJvcjogIlRoaXMgZW1haWwgaXMgYWxyZWFkeSByZWdpc3RlcmVkLiBQbGVhc2Ugc2lnbiBpbiBpbnN0ZWFkLiIgfSk7CiAgICAgIHJldHVybjsKICAgIH0KCiAgICBjb25zdCBvdHAgPSBnZW5lcmF0ZU90cCgpOwogICAgY29uc3QgZXhwaXJlc0F0ID0gbmV3IERhdGUoRGF0ZS5ub3coKSArIDEwICogNjAgKiAxMDAwKTsgLy8gMTAgbWludXRlcwoKICAgIC8vIEludmFsaWRhdGUgb2xkIE9UUHMgZm9yIHRoaXMgZW1haWwKICAgIGF3YWl0IGRiLnVwZGF0ZShlbWFpbE90cHNUYWJsZSkKICAgICAgLnNldCh7IHVzZWQ6IHRydWUgfSkKICAgICAgLndoZXJlKGFuZChlcShlbWFpbE90cHNUYWJsZS5lbWFpbCwgZW1haWwpLCBlcShlbWFpbE90cHNUYWJsZS50eXBlLCAidmVyaWZ5IikpKTsKCiAgICBhd2FpdCBkYi5pbnNlcnQoZW1haWxPdHBzVGFibGUpLnZhbHVlcyh7IGVtYWlsLCBvdHAsIHR5cGU6ICJ2ZXJpZnkiLCBleHBpcmVzQXQgfSk7CgogICAgY29uc3Qgb3RwRW5hYmxlZCA9IGF3YWl0IGlzRW1haWxFbmFibGVkKCJvdHBWZXJpZmljYXRpb24iKTsKICAgIGlmIChvdHBFbmFibGVkKSB7CiAgICAgIGNvbnN0IHNlbnQgPSBhd2FpdCBzZW5kT3RwRW1haWwoZW1haWwsIG90cCwgbmFtZSB8fCAidGhlcmUiKTsKICAgICAgaWYgKCFzZW50KSB7CiAgICAgICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBlcnJvcjogIkZhaWxlZCB0byBzZW5kIHZlcmlmaWNhdGlvbiBlbWFpbC4gUGxlYXNlIHRyeSBhZ2Fpbi4iIH0pOwogICAgICAgIHJldHVybjsKICAgICAgfQogICAgfQoKICAgIHJlcy5qc29uKHsgc3VjY2VzczogdHJ1ZSwgbWVzc2FnZTogIlZlcmlmaWNhdGlvbiBjb2RlIHNlbnQgdG8geW91ciBlbWFpbC4iIH0pOwogIH0gY2F0Y2ggKGVycikgewogICAgcmVxLmxvZy5lcnJvcihlcnIpOwogICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBlcnJvcjogIkZhaWxlZCB0byBzZW5kIE9UUCIgfSk7CiAgfQp9KTsKCi8vIFBPU1QgL2F1dGgvdmVyaWZ5LW90cCDigJQgdmVyaWZ5IE9UUCBhbmQgY29tcGxldGUgcmVnaXN0cmF0aW9uCnJvdXRlci5wb3N0KCIvYXV0aC92ZXJpZnktb3RwIiwgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgdHJ5IHsKICAgIGNvbnN0IHsgZW1haWwsIG90cCwgbmFtZSwgcGFzc3dvcmQgfSA9IHJlcS5ib2R5OwogICAgaWYgKCFlbWFpbCB8fCAhb3RwIHx8ICFuYW1lIHx8ICFwYXNzd29yZCkgewogICAgICByZXMuc3RhdHVzKDQwMCkuanNvbih7IGVycm9yOiAiQWxsIGZpZWxkcyBhcmUgcmVxdWlyZWQiIH0pOwogICAgICByZXR1cm47CiAgICB9CgogICAgLy8gRmluZCB2YWxpZCBPVFAKICAgIGNvbnN0IFtyZWNvcmRdID0gYXdhaXQgZGIuc2VsZWN0KCkuZnJvbShlbWFpbE90cHNUYWJsZSkud2hlcmUoCiAgICAgIGFuZCgKICAgICAgICBlcShlbWFpbE90cHNUYWJsZS5lbWFpbCwgZW1haWwpLAogICAgICAgIGVxKGVtYWlsT3Rwc1RhYmxlLnR5cGUsICJ2ZXJpZnkiKSwKICAgICAgICBlcShlbWFpbE90cHNUYWJsZS51c2VkLCBmYWxzZSksCiAgICAgICAgZ3QoZW1haWxPdHBzVGFibGUuZXhwaXJlc0F0LCBuZXcgRGF0ZSgpKQogICAgICApCiAgICApOwoKICAgIGlmICghcmVjb3JkKSB7CiAgICAgIHJlcy5zdGF0dXMoNDAwKS5qc29uKHsgZXJyb3I6ICJJbnZhbGlkIG9yIGV4cGlyZWQgdmVyaWZpY2F0aW9uIGNvZGUuIiB9KTsKICAgICAgcmV0dXJuOwogICAgfQoKICAgIGlmIChyZWNvcmQub3RwICE9PSBvdHApIHsKICAgICAgcmVzLnN0YXR1cyg0MDApLmpzb24oeyBlcnJvcjogIkluY29ycmVjdCB2ZXJpZmljYXRpb24gY29kZS4iIH0pOwogICAgICByZXR1cm47CiAgICB9CgogICAgLy8gTWFyayBPVFAgdXNlZAogICAgYXdhaXQgZGIudXBkYXRlKGVtYWlsT3Rwc1RhYmxlKS5zZXQoeyB1c2VkOiB0cnVlIH0pLndoZXJlKGVxKGVtYWlsT3Rwc1RhYmxlLmlkLCByZWNvcmQuaWQpKTsKCiAgICAvLyBDaGVjayBhZ2FpbiBpbiBjYXNlIG9mIHJhY2UKICAgIGNvbnN0IFtleGlzdGluZ10gPSBhd2FpdCBkYi5zZWxlY3QoKS5mcm9tKHVzZXJzVGFibGUpLndoZXJlKGVxKHVzZXJzVGFibGUuZW1haWwsIGVtYWlsKSk7CiAgICBpZiAoZXhpc3RpbmcpIHsKICAgICAgcmVzLnN0YXR1cyg0MDkpLmpzb24oeyBlcnJvcjogIkVtYWlsIGFscmVhZHkgcmVnaXN0ZXJlZC4iIH0pOwogICAgICByZXR1cm47CiAgICB9CgogICAgY29uc3QgcGFzc3dvcmRIYXNoID0gYXdhaXQgYmNyeXB0Lmhhc2gocGFzc3dvcmQsIDEwKTsKICAgIGNvbnN0IFt1c2VyXSA9IGF3YWl0IGRiLmluc2VydCh1c2Vyc1RhYmxlKS52YWx1ZXMoeyBlbWFpbCwgcGFzc3dvcmRIYXNoLCBuYW1lLCByb2xlOiAidXNlciIgfSkucmV0dXJuaW5nKCk7CiAgICBjb25zdCB0b2tlbiA9IHNpZ25Ub2tlbih7IGlkOiB1c2VyLmlkLCBlbWFpbDogdXNlci5lbWFpbCwgcm9sZTogdXNlci5yb2xlIH0pOwoKICAgIHJlcy5zdGF0dXMoMjAxKS5qc29uKHsgdXNlcjogdG9Vc2VyKHVzZXIpLCB0b2tlbiB9KTsKICB9IGNhdGNoIChlcnIpIHsKICAgIHJlcS5sb2cuZXJyb3IoZXJyKTsKICAgIHJlcy5zdGF0dXMoNTAwKS5qc29uKHsgZXJyb3I6ICJSZWdpc3RyYXRpb24gZmFpbGVkIiB9KTsKICB9Cn0pOwoKLy8gUE9TVCAvYXV0aC9mb3Jnb3QtcGFzc3dvcmQg4oCUIHNlbmQgcmVzZXQgbGluawpyb3V0ZXIucG9zdCgiL2F1dGgvZm9yZ290LXBhc3N3b3JkIiwgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgdHJ5IHsKICAgIGNvbnN0IHsgZW1haWwgfSA9IHJlcS5ib2R5OwogICAgaWYgKCFlbWFpbCkgeyByZXMuc3RhdHVzKDQwMCkuanNvbih7IGVycm9yOiAiRW1haWwgaXMgcmVxdWlyZWQiIH0pOyByZXR1cm47IH0KCiAgICBjb25zdCBbdXNlcl0gPSBhd2FpdCBkYi5zZWxlY3QoKS5mcm9tKHVzZXJzVGFibGUpLndoZXJlKGVxKHVzZXJzVGFibGUuZW1haWwsIGVtYWlsKSk7CgogICAgLy8gQWx3YXlzIHJlc3BvbmQgc3VjY2VzcyB0byBhdm9pZCB1c2VyIGVudW1lcmF0aW9uCiAgICBpZiAoIXVzZXIpIHsKICAgICAgcmVzLmpzb24oeyBzdWNjZXNzOiB0cnVlLCBtZXNzYWdlOiAiSWYgdGhpcyBlbWFpbCBleGlzdHMsIGEgcmVzZXQgbGluayBoYXMgYmVlbiBzZW50LiIgfSk7CiAgICAgIHJldHVybjsKICAgIH0KCiAgICBjb25zdCB0b2tlbiA9IGdlbmVyYXRlVG9rZW4oKTsKICAgIGNvbnN0IGV4cGlyZXNBdCA9IG5ldyBEYXRlKERhdGUubm93KCkgKyA2MCAqIDYwICogMTAwMCk7IC8vIDEgaG91cgoKICAgIGF3YWl0IGRiLmluc2VydChwYXNzd29yZFJlc2V0VG9rZW5zVGFibGUpLnZhbHVlcyh7IHVzZXJJZDogdXNlci5pZCwgdG9rZW4sIGV4cGlyZXNBdCB9KTsKCiAgICBjb25zdCBhcHBVcmwgPSBnZXRBcHBVcmwocmVxKTsKICAgIGNvbnN0IHJlc2V0TGluayA9IGAke2FwcFVybH0vcmVzZXQtcGFzc3dvcmQ/dG9rZW49JHt0b2tlbn1gOwoKICAgIGNvbnN0IHJlc2V0RW5hYmxlZCA9IGF3YWl0IGlzRW1haWxFbmFibGVkKCJwYXNzd29yZFJlc2V0Iik7CiAgICBpZiAocmVzZXRFbmFibGVkKSB7CiAgICAgIGF3YWl0IHNlbmRQYXNzd29yZFJlc2V0RW1haWwodXNlci5lbWFpbCwgdXNlci5uYW1lLCByZXNldExpbmspOwogICAgfQoKICAgIHJlcy5qc29uKHsgc3VjY2VzczogdHJ1ZSwgbWVzc2FnZTogIklmIHRoaXMgZW1haWwgZXhpc3RzLCBhIHJlc2V0IGxpbmsgaGFzIGJlZW4gc2VudC4iIH0pOwogIH0gY2F0Y2ggKGVycikgewogICAgcmVxLmxvZy5lcnJvcihlcnIpOwogICAgcmVzLnN0YXR1cyg1MDApLmpzb24oeyBlcnJvcjogIkZhaWxlZCB0byBwcm9jZXNzIHJlcXVlc3QiIH0pOwogIH0KfSk7CgovLyBQT1NUIC9hdXRoL3Jlc2V0LXBhc3N3b3JkIOKAlCBzZXQgbmV3IHBhc3N3b3JkIHVzaW5nIHRva2VuCnJvdXRlci5wb3N0KCIvYXV0aC9yZXNldC1wYXNzd29yZCIsIGFzeW5jIChyZXEsIHJlcykgPT4gewogIHRyeSB7CiAgICBjb25zdCB7IHRva2VuLCBwYXNzd29yZCB9ID0gcmVxLmJvZHk7CiAgICBpZiAoIXRva2VuIHx8ICFwYXNzd29yZCkgeyByZXMuc3RhdHVzKDQwMCkuanNvbih7IGVycm9yOiAiVG9rZW4gYW5kIHBhc3N3b3JkIGFyZSByZXF1aXJlZCIgfSk7IHJldHVybjsgfQogICAgaWYgKHBhc3N3b3JkLmxlbmd0aCA8IDgpIHsgcmVzLnN0YXR1cyg0MDApLmpzb24oeyBlcnJvcjogIlBhc3N3b3JkIG11c3QgYmUgYXQgbGVhc3QgOCBjaGFyYWN0ZXJzIiB9KTsgcmV0dXJuOyB9CgogICAgY29uc3QgW3JlY29yZF0gPSBhd2FpdCBkYi5zZWxlY3QoKS5mcm9tKHBhc3N3b3JkUmVzZXRUb2tlbnNUYWJsZSkud2hlcmUoCiAgICAgIGFuZCgKICAgICAgICBlcShwYXNzd29yZFJlc2V0VG9rZW5zVGFibGUudG9rZW4sIHRva2VuKSwKICAgICAgICBlcShwYXNzd29yZFJlc2V0VG9rZW5zVGFibGUudXNlZCwgZmFsc2UpLAogICAgICAgIGd0KHBhc3N3b3JkUmVzZXRUb2tlbnNUYWJsZS5leHBpcmVzQXQsIG5ldyBEYXRlKCkpCiAgICAgICkKICAgICk7CgogICAgaWYgKCFyZWNvcmQpIHsKICAgICAgcmVzLnN0YXR1cyg0MDApLmpzb24oeyBlcnJvcjogIlRoaXMgcmVzZXQgbGluayBpcyBpbnZhbGlkIG9yIGhhcyBleHBpcmVkLiIgfSk7CiAgICAgIHJldHVybjsKICAgIH0KCiAgICBjb25zdCBwYXNzd29yZEhhc2ggPSBhd2FpdCBiY3J5cHQuaGFzaChwYXNzd29yZCwgMTApOwogICAgYXdhaXQgZGIudXBkYXRlKHVzZXJzVGFibGUpLnNldCh7IHBhc3N3b3JkSGFzaCB9KS53aGVyZShlcSh1c2Vyc1RhYmxlLmlkLCByZWNvcmQudXNlcklkKSk7CiAgICBhd2FpdCBkYi51cGRhdGUocGFzc3dvcmRSZXNldFRva2Vuc1RhYmxlKS5zZXQoeyB1c2VkOiB0cnVlIH0pLndoZXJlKGVxKHBhc3N3b3JkUmVzZXRUb2tlbnNUYWJsZS5pZCwgcmVjb3JkLmlkKSk7CgogICAgcmVzLmpzb24oeyBzdWNjZXNzOiB0cnVlLCBtZXNzYWdlOiAiUGFzc3dvcmQgcmVzZXQgc3VjY2Vzc2Z1bGx5LiBZb3UgY2FuIG5vdyBzaWduIGluLiIgfSk7CiAgfSBjYXRjaCAoZXJyKSB7CiAgICByZXEubG9nLmVycm9yKGVycik7CiAgICByZXMuc3RhdHVzKDUwMCkuanNvbih7IGVycm9yOiAiRmFpbGVkIHRvIHJlc2V0IHBhc3N3b3JkIiB9KTsKICB9Cn0pOwoKLy8gUE9TVCAvYXV0aC9jaGVjay1lbWFpbCDigJQgY2hlY2sgaWYgZW1haWwgZXhpc3RzIChmb3IgZm9yZ290IHBhc3N3b3JkIFVYKQpyb3V0ZXIucG9zdCgiL2F1dGgvY2hlY2stZW1haWwiLCBhc3luYyAocmVxLCByZXMpID0+IHsKICB0cnkgewogICAgY29uc3QgeyBlbWFpbCB9ID0gcmVxLmJvZHk7CiAgICBpZiAoIWVtYWlsKSB7IHJlcy5zdGF0dXMoNDAwKS5qc29uKHsgZXJyb3I6ICJFbWFpbCBpcyByZXF1aXJlZCIgfSk7IHJldHVybjsgfQogICAgY29uc3QgW3VzZXJdID0gYXdhaXQgZGIuc2VsZWN0KHsgaWQ6IHVzZXJzVGFibGUuaWQgfSkuZnJvbSh1c2Vyc1RhYmxlKS53aGVyZShlcSh1c2Vyc1RhYmxlLmVtYWlsLCBlbWFpbCkpOwogICAgcmVzLmpzb24oeyBleGlzdHM6ICEhdXNlciB9KTsKICB9IGNhdGNoIChlcnIpIHsKICAgIHJlcS5sb2cuZXJyb3IoZXJyKTsKICAgIHJlcy5zdGF0dXMoNTAwKS5qc29uKHsgZXJyb3I6ICJGYWlsZWQiIH0pOwogIH0KfSk7CgpleHBvcnQgZGVmYXVsdCByb3V0ZXI7Cg==
+import { Router } from "express";
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
+import { db } from "@workspace/db";
+import { usersTable, emailOtpsTable, passwordResetTokensTable } from "@workspace/db";
+import { eq, and, gt } from "drizzle-orm";
+import { signToken } from "../lib/auth";
+import { sendOtpEmail, sendPasswordResetEmail } from "../lib/mailgun";
+import { isEmailEnabled } from "../lib/emailSettings";
+
+const router = Router();
+
+function generateOtp(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function generateToken(): string {
+  return crypto.randomBytes(32).toString("hex");
+}
+
+function getAppUrl(req: any): string {
+  const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost:8081";
+  const proto = req.headers["x-forwarded-proto"] || "https";
+  return `${proto}://${host}`;
+}
+
+function toUser(u: any) {
+  return { id: u.id, email: u.email, name: u.name, avatar: u.avatar, role: u.role, createdAt: u.createdAt?.toISOString() };
+}
+
+// POST /auth/send-otp — send OTP for email verification during signup
+router.post("/auth/send-otp", async (req, res) => {
+  try {
+    const { email, name } = req.body;
+    if (!email) { res.status(400).json({ error: "Email is required" }); return; }
+
+    // Check if email already registered
+    const [existing] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+    if (existing) {
+      res.status(409).json({ error: "This email is already registered. Please sign in instead." });
+      return;
+    }
+
+    const otp = generateOtp();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    // Invalidate old OTPs for this email
+    await db.update(emailOtpsTable)
+      .set({ used: true })
+      .where(and(eq(emailOtpsTable.email, email), eq(emailOtpsTable.type, "verify")));
+
+    await db.insert(emailOtpsTable).values({ email, otp, type: "verify", expiresAt });
+
+    const otpEnabled = await isEmailEnabled("otpVerification");
+    if (otpEnabled) {
+      const sent = await sendOtpEmail(email, otp, name || "there");
+      if (!sent) {
+        res.status(500).json({ error: "Failed to send verification email. Please try again." });
+        return;
+      }
+    }
+
+    res.json({ success: true, message: "Verification code sent to your email." });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to send OTP" });
+  }
+});
+
+// POST /auth/verify-otp — verify OTP and complete registration
+router.post("/auth/verify-otp", async (req, res) => {
+  try {
+    const { email, otp, name, password } = req.body;
+    if (!email || !otp || !name || !password) {
+      res.status(400).json({ error: "All fields are required" });
+      return;
+    }
+
+    // Find valid OTP
+    const [record] = await db.select().from(emailOtpsTable).where(
+      and(
+        eq(emailOtpsTable.email, email),
+        eq(emailOtpsTable.type, "verify"),
+        eq(emailOtpsTable.used, false),
+        gt(emailOtpsTable.expiresAt, new Date())
+      )
+    );
+
+    if (!record) {
+      res.status(400).json({ error: "Invalid or expired verification code." });
+      return;
+    }
+
+    if (record.otp !== otp) {
+      res.status(400).json({ error: "Incorrect verification code." });
+      return;
+    }
+
+    // Mark OTP used
+    await db.update(emailOtpsTable).set({ used: true }).where(eq(emailOtpsTable.id, record.id));
+
+    // Check again in case of race
+    const [existing] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+    if (existing) {
+      res.status(409).json({ error: "Email already registered." });
+      return;
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    const [user] = await db.insert(usersTable).values({ email, passwordHash, name, role: "user" }).returning();
+    const token = signToken({ id: user.id, email: user.email, role: user.role });
+
+    res.status(201).json({ user: toUser(user), token });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Registration failed" });
+  }
+});
+
+// POST /auth/forgot-password — send reset link
+router.post("/auth/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) { res.status(400).json({ error: "Email is required" }); return; }
+
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+
+    // Always respond success to avoid user enumeration
+    if (!user) {
+      res.json({ success: true, message: "If this email exists, a reset link has been sent." });
+      return;
+    }
+
+    const token = generateToken();
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    await db.insert(passwordResetTokensTable).values({ userId: user.id, token, expiresAt });
+
+    const appUrl = getAppUrl(req);
+    const resetLink = `${appUrl}/reset-password?token=${token}`;
+
+    const resetEnabled = await isEmailEnabled("passwordReset");
+    if (resetEnabled) {
+      await sendPasswordResetEmail(user.email, user.name, resetLink);
+    }
+
+    res.json({ success: true, message: "If this email exists, a reset link has been sent." });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to process request" });
+  }
+});
+
+// POST /auth/reset-password — set new password using token
+router.post("/auth/reset-password", async (req, res) => {
+  try {
+    const { token, password } = req.body;
+    if (!token || !password) { res.status(400).json({ error: "Token and password are required" }); return; }
+    if (password.length < 8) { res.status(400).json({ error: "Password must be at least 8 characters" }); return; }
+
+    const [record] = await db.select().from(passwordResetTokensTable).where(
+      and(
+        eq(passwordResetTokensTable.token, token),
+        eq(passwordResetTokensTable.used, false),
+        gt(passwordResetTokensTable.expiresAt, new Date())
+      )
+    );
+
+    if (!record) {
+      res.status(400).json({ error: "This reset link is invalid or has expired." });
+      return;
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    await db.update(usersTable).set({ passwordHash }).where(eq(usersTable.id, record.userId));
+    await db.update(passwordResetTokensTable).set({ used: true }).where(eq(passwordResetTokensTable.id, record.id));
+
+    res.json({ success: true, message: "Password reset successfully. You can now sign in." });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to reset password" });
+  }
+});
+
+// POST /auth/check-email — check if email exists (for forgot password UX)
+router.post("/auth/check-email", async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) { res.status(400).json({ error: "Email is required" }); return; }
+    const [user] = await db.select({ id: usersTable.id }).from(usersTable).where(eq(usersTable.email, email));
+    res.json({ exists: !!user });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed" });
+  }
+});
+
+export default router;

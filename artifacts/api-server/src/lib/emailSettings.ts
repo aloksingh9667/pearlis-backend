@@ -1,1 +1,17 @@
-aW1wb3J0IHsgZGIgfSBmcm9tICJAd29ya3NwYWNlL2RiIjsKaW1wb3J0IHsgc2l0ZVNldHRpbmdzVGFibGUgfSBmcm9tICJAd29ya3NwYWNlL2RiIjsKaW1wb3J0IHsgZXEgfSBmcm9tICJkcml6emxlLW9ybSI7CgpleHBvcnQgYXN5bmMgZnVuY3Rpb24gaXNFbWFpbEVuYWJsZWQoa2V5OiBzdHJpbmcpOiBQcm9taXNlPGJvb2xlYW4+IHsKICB0cnkgewogICAgY29uc3QgW3NldHRpbmddID0gYXdhaXQgZGIKICAgICAgLnNlbGVjdCgpCiAgICAgIC5mcm9tKHNpdGVTZXR0aW5nc1RhYmxlKQogICAgICAud2hlcmUoZXEoc2l0ZVNldHRpbmdzVGFibGUua2V5LCAiZW1haWxOb3RpZmljYXRpb25zIikpOwogICAgaWYgKCFzZXR0aW5nKSByZXR1cm4gdHJ1ZTsKICAgIGNvbnN0IGNvbmZpZyA9IHNldHRpbmcudmFsdWUgYXMgUmVjb3JkPHN0cmluZywgYm9vbGVhbj47CiAgICByZXR1cm4gY29uZmlnW2tleV0gIT09IGZhbHNlOwogIH0gY2F0Y2ggewogICAgcmV0dXJuIHRydWU7CiAgfQp9Cg==
+import { db } from "@workspace/db";
+import { siteSettingsTable } from "@workspace/db";
+import { eq } from "drizzle-orm";
+
+export async function isEmailEnabled(key: string): Promise<boolean> {
+  try {
+    const [setting] = await db
+      .select()
+      .from(siteSettingsTable)
+      .where(eq(siteSettingsTable.key, "emailNotifications"));
+    if (!setting) return true;
+    const config = setting.value as Record<string, boolean>;
+    return config[key] !== false;
+  } catch {
+    return true;
+  }
+}
