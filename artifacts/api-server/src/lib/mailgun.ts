@@ -459,24 +459,21 @@ export async function sendLowStockAdminAlertEmail(
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid #333;">
               <thead>
                 <tr style="background:#111;">
-                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;text-align:left;">Product</th>
-                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;text-align:center;">Stock</th>
-                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;text-align:right;">Action</th>
+                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;font-weight:600;text-align:left;">Product</th>
+                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;font-weight:600;text-align:center;">Stock</th>
+                  <th style="padding:10px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;font-weight:600;text-align:right;">Action</th>
                 </tr>
               </thead>
               <tbody>${rows}</tbody>
             </table>
-            <div style="text-align:center;margin-top:28px;">
-              <a href="${appUrl}/admin/products" style="display:inline-block;background:#D4AF37;color:#0F0F0F;text-decoration:none;padding:14px 36px;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:bold;">Manage Products</a>
-            </div>
           </div>
-          <div style="background:#0F0F0F;padding:16px 40px;text-align:center;border-top:1px solid #222;">
-            <p style="color:#444;font-size:10px;letter-spacing:2px;margin:0;">© PEARLIS FINE JEWELLERY — ADMIN ALERT</p>
+          <div style="background:#0F0F0F;padding:20px 40px;text-align:center;border-top:1px solid #222;">
+            <a href="${appUrl}/admin/stock-alerts" style="display:inline-block;background:#D4AF37;color:#0F0F0F;text-decoration:none;padding:12px 32px;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:bold;">View Stock Alerts</a>
           </div>
         </div>
       `,
     });
-    console.info(`Low stock admin alert sent to ${to} for ${products.length} product(s)`);
+    console.info(`Low stock admin alert sent to ${to} for ${products.length} products`);
     return true;
   } catch (err) {
     console.error("Mailgun sendLowStockAdminAlertEmail error:", err);
@@ -484,38 +481,94 @@ export async function sendLowStockAdminAlertEmail(
   }
 }
 
-export async function sendPasswordResetEmail(to: string, name: string, resetLink: string): Promise<boolean> {
+/* ── Return request status email ── */
+const RETURN_STATUS_CONFIG: Record<string, { subject: string; heading: string; color: string; emoji: string; body: string }> = {
+  approved: {
+    subject: "Your Return Request Has Been Approved",
+    heading: "Return Approved ✓",
+    color: "#16a34a",
+    emoji: "✓",
+    body: "Great news! We have reviewed your return request and it has been approved. Our team will process your refund within 5–7 business days. The amount will be credited back to your original payment method.",
+  },
+  rejected: {
+    subject: "Update on Your Return Request",
+    heading: "Return Request Update",
+    color: "#ef4444",
+    emoji: "✕",
+    body: "We have reviewed your return request and unfortunately we are unable to approve it at this time. Please see the note from our team below.",
+  },
+};
+
+export async function sendReturnRequestStatusEmail(
+  to: string,
+  customerName: string,
+  orderId: number,
+  status: string,
+  adminNote: string | null,
+  appUrl: string,
+): Promise<boolean> {
   const mg = getClient();
-  if (!mg) { console.warn("Mailgun not configured"); return false; }
+  if (!mg || !to) return false;
+  const cfg = RETURN_STATUS_CONFIG[status];
+  if (!cfg) return false;
+  const invoiceNo = orderId.toString().padStart(6, "0");
   try {
     await mg.client.messages.create(mg.domain, {
-      from: `Pearlis <noreply@${mg.domain}>`,
+      from: `Pearlis Fine Jewellery <noreply@${mg.domain}>`,
       to: [to],
-      subject: "Reset Your Pearlis Password",
-      html: `
-        <div style="font-family: 'Georgia', serif; max-width: 520px; margin: 0 auto; background: #FAF7F2; padding: 48px 40px;">
-          <h1 style="font-size: 28px; letter-spacing: 8px; color: #0F0F0F; margin-bottom: 8px;">PEARLIS</h1>
-          <p style="color: #888; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px;">Fine Jewellery</p>
-          <h2 style="font-size: 20px; color: #0F0F0F; margin-bottom: 16px;">Hello, ${name}</h2>
-          <p style="color: #555; font-size: 14px; line-height: 1.8; margin-bottom: 32px;">
-            We received a request to reset your password. Click the button below to set a new password. This link expires in <strong>1 hour</strong>.
-          </p>
-          <div style="text-align: center; margin-bottom: 32px;">
-            <a href="${resetLink}" style="display: inline-block; background: #D4AF37; color: #0F0F0F; text-decoration: none; padding: 16px 40px; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: bold;">Reset Password</a>
-          </div>
-          <p style="color: #999; font-size: 12px; line-height: 1.6;">
-            Or copy and paste this link into your browser:<br/>
-            <span style="color: #D4AF37; word-break: break-all;">${resetLink}</span>
-          </p>
-          <p style="color: #bbb; font-size: 12px; margin-top: 24px;">If you did not request a password reset, please ignore this email. Your password will remain unchanged.</p>
-          <hr style="border: none; border-top: 1px solid #E5E0D8; margin: 32px 0;" />
-          <p style="color: #bbb; font-size: 11px; letter-spacing: 2px; text-align: center;">© PEARLIS FINE JEWELLERY</p>
-        </div>
-      `,
+      subject: `${cfg.subject} — #ORD-${invoiceNo} | Pearlis`,
+      html: `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#F5F1EB;font-family:'Georgia',serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#F5F1EB;padding:40px 16px;">
+<tr><td>
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #E8E2D9;">
+
+  <tr><td style="background:#0F0F0F;padding:32px 40px;text-align:center;">
+    <div style="font-size:28px;letter-spacing:10px;color:#fff;font-weight:700;margin-bottom:4px;">PEARLIS</div>
+    <div style="font-size:10px;letter-spacing:5px;color:#D4AF37;text-transform:uppercase;">Fine Jewellery</div>
+  </td></tr>
+  <tr><td style="height:3px;background:linear-gradient(90deg,#B8960C,#D4AF37,#F0CF60,#D4AF37,#B8960C);"></td></tr>
+
+  <tr><td style="padding:44px 40px 28px;text-align:center;">
+    <div style="width:60px;height:60px;background:${cfg.color};border-radius:50%;margin:0 auto 20px;line-height:60px;font-size:26px;text-align:center;color:#fff;font-weight:bold;">${cfg.emoji}</div>
+    <h2 style="font-size:22px;color:#0F0F0F;margin:0 0 10px;font-weight:400;">${cfg.heading}</h2>
+    <p style="color:#888;font-size:13px;margin:0 0 4px;">Hello, <strong style="color:#0F0F0F;">${customerName}</strong></p>
+    <p style="color:#888;font-size:12px;margin:0;">Return request for order <strong style="color:#D4AF37;">#ORD-${invoiceNo}</strong></p>
+  </td></tr>
+
+  <tr><td style="padding:0 40px 28px;">
+    <div style="background:#FAF8F3;border-left:3px solid ${cfg.color};padding:18px 20px;">
+      <p style="margin:0;font-size:14px;color:#555;line-height:1.7;">${cfg.body}</p>
+    </div>
+  </td></tr>
+
+  ${adminNote ? `<tr><td style="padding:0 40px 28px;">
+    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#888;margin:0 0 10px;">Note from our team</p>
+    <div style="background:#fff;border:1px solid #E8E2D9;padding:16px 20px;border-radius:2px;">
+      <p style="margin:0;font-size:14px;color:#333;line-height:1.7;font-style:italic;">"${adminNote}"</p>
+    </div>
+  </td></tr>` : ""}
+
+  <tr><td style="padding:0 40px 40px;text-align:center;">
+    <a href="${appUrl}/account" style="display:inline-block;background:#0F0F0F;color:#fff;text-decoration:none;padding:15px 40px;font-size:11px;letter-spacing:4px;text-transform:uppercase;font-weight:bold;">View My Orders</a>
+  </td></tr>
+
+  <tr><td style="height:2px;background:linear-gradient(90deg,#B8960C,#D4AF37,#F0CF60,#D4AF37,#B8960C);"></td></tr>
+  <tr><td style="background:#0F0F0F;padding:20px 40px;text-align:center;">
+    <p style="margin:0 0 4px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#D4AF37;">PEARLIS FINE JEWELLERY</p>
+    <p style="margin:0;font-size:11px;color:#555;">Questions? Reply to this email or contact our support team.</p>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+</body></html>`,
     });
+    console.info(`Return request status email (${status}) sent to ${to} for order #${orderId}`);
     return true;
   } catch (err) {
-    console.error("Mailgun sendPasswordResetEmail error:", err);
+    console.error("Mailgun sendReturnRequestStatusEmail error:", err);
     return false;
   }
 }
