@@ -5,6 +5,28 @@ import { eq, desc, and, sql } from "drizzle-orm";
 import { requireAuth, optionalAuth, getSessionId, requireAdmin } from "../lib/auth";
 import { sendOrderConfirmationEmail, sendOrderStatusEmail } from "../lib/mailgun";
 
+/* ── Return Requests table (auto-created on first use) ── */
+let _returnTableReady = false;
+async function ensureReturnTable() {
+  if (_returnTableReady) return;
+  await db.execute(sql`
+    CREATE TABLE IF NOT EXISTS return_requests (
+      id SERIAL PRIMARY KEY,
+      order_id INTEGER NOT NULL,
+      user_id INTEGER,
+      customer_name TEXT,
+      customer_email TEXT,
+      reason TEXT NOT NULL,
+      description TEXT,
+      status TEXT DEFAULT 'pending' NOT NULL,
+      admin_note TEXT,
+      created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+      updated_at TIMESTAMP DEFAULT NOW() NOT NULL
+    )
+  `);
+  _returnTableReady = true;
+}
+
 const APP_URL = process.env.APP_URL || "https://pearlis.replit.app";
 
 const router = Router();
@@ -183,6 +205,82 @@ router.put("/orders/:id", requireAdmin, async (req, res) => {
   } catch (err) {
     req.log.error(err);
     res.status(500).json({ error: "Failed to update order" });
+  }
+});
+
+/* ── Return Requests ── */
+
+// User submits a return/refund request for a delivered order
+router.post("/orders/:id/return-request", requireAuth, async (req, res) => {
+  try {
+    await ensureReturnTable();
+    const orderId = parseInt(req.params.id);
+    const user = (req as any).user;
+    const { reason, description } = req.body;
+    if (!reason) { res.status(400).json({ error: "Reason is required" }); return; }
+
+    // Verify order belongs to this user and is delivered
+    const [order] = await db.select().from(ordersTable).where(eq(ordersTable.id, orderId));
+    if (!order) { res.status(404).json({ error: "Order not found" }); return; }
+    if (user.role !== "admin" && order.userId !== user.id) {
+      res.status(403).json({ error: "Forbidden" }); return;
+    }
+    if (order.status !== "delivered") {
+      res.status(400).json({ error: "Only delivered orders can be returned" }); return;
+    }
+
+    // Check for existing pending request
+    const existing = await db.execute(sql`
+      SELECT id FROM return_requests WHERE order_id = ${orderId} AND status = 'pending'
+    `);
+    if ((existing as any).rows?.length > 0) {
+      res.status(400).json({ error: "A return request is already pending for this order" }); return;
+    }
+
+    await db.execute(sql`
+      INSERT INTO return_requests (order_id, user_id, customer_name, customer_email, reason, description)
+      VALUES (${orderId}, ${user.id}, ${order.customerName}, ${order.customerEmail}, ${reason}, ${description || null})
+    `);
+
+    res.status(201).json({ message: "Return request submitted successfully" });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to submit return request" });
+  }
+});
+
+// Admin: list all return requests
+router.get("/admin/return-requests", requireAdmin, async (req, res) => {
+  try {
+    await ensureReturnTable();
+    const { status } = req.query;
+    let query = `SELECT * FROM return_requests`;
+    if (status && status !== "all") query += ` WHERE status = '${status}'`;
+    query += ` ORDER BY created_at DESC`;
+    const result = await db.execute(sql.raw(query));
+    const rows = (result as any).rows ?? [];
+    res.json(rows);
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to fetch return requests" });
+  }
+});
+
+// Admin: update return request status / note
+router.patch("/admin/return-requests/:id", requireAdmin, async (req, res) => {
+  try {
+    await ensureReturnTable();
+    const id = parseInt(req.params.id);
+    const { status, adminNote } = req.body;
+    await db.execute(sql`
+      UPDATE return_requests
+      SET status = ${status}, admin_note = ${adminNote ?? null}, updated_at = NOW()
+      WHERE id = ${id}
+    `);
+    res.json({ message: "Updated" });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to update return request" });
   }
 });
 
