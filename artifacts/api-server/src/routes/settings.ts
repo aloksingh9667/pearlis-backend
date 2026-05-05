@@ -29,7 +29,14 @@ const DEFAULT_SETTINGS: Record<string, any> = {
   payment: {
     codEnabled: true,
     razorpayEnabled: false,
+    razorpayMode: "test",
     razorpayKeyId: "",
+    razorpayTestKeyId: "",
+  },
+  keepAlive: {
+    enabled: false,
+    intervalMinutes: 14,
+    pingUrl: "",
   },
   contact: {
     email: "concierge@pearlis.com",
