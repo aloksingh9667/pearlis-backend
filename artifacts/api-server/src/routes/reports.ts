@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { db } from "@workspace/db";
-import { ordersTable, usersTable, productsTable } from "@workspace/db";
-import { gte, and, sql, desc, eq } from "drizzle-orm";
+import { ordersTable, usersTable, productsTable, couponsTable } from "@workspace/db";
+import { gte, and, sql, desc, eq, isNotNull } from "drizzle-orm";
 import { requireAdmin } from "../lib/auth";
 
 const router = Router();
@@ -160,6 +160,44 @@ router.get("/admin/reports", requireAdmin, async (req, res) => {
       .sort((a, b) => b.qty - a.qty)
       .slice(0, 8);
 
+    // ── Coupon analytics ──
+    // Fetch all coupons so we can look up type/face-value by code
+    const allCoupons = await db.select().from(couponsTable);
+    const couponMeta = new Map(allCoupons.map(c => [c.code, c]));
+
+    const couponMap = new Map<string, { uses: number; totalDiscount: number; totalRevenue: number }>();
+    for (const order of orders) {
+      if (!order.couponCode) continue;
+      const code = order.couponCode.toUpperCase();
+      const existing = couponMap.get(code) || { uses: 0, totalDiscount: 0, totalRevenue: 0 };
+      const discount = parseFloat(order.discount || "0");
+      const revenue  = parseFloat(order.total);
+      couponMap.set(code, {
+        uses:          existing.uses + 1,
+        totalDiscount: existing.totalDiscount + discount,
+        totalRevenue:  existing.totalRevenue + revenue,
+      });
+    }
+
+    const couponStats = Array.from(couponMap.entries())
+      .map(([code, v]) => {
+        const meta = couponMeta.get(code);
+        return {
+          code,
+          discountType:  meta?.discountType  ?? "flat",
+          discountValue: meta ? parseFloat(meta.discountValue) : 0,
+          uses:          v.uses,
+          totalDiscount: Math.round(v.totalDiscount * 83),
+          revenueAfter:  Math.round(v.totalRevenue  * 83),
+          revenueBefore: Math.round((v.totalRevenue + v.totalDiscount) * 83),
+        };
+      })
+      .sort((a, b) => b.uses - a.uses);
+
+    // ── Coupon summary ──
+    const totalCouponOrders  = couponStats.reduce((s, c) => s + c.uses, 0);
+    const totalDiscountGiven = couponStats.reduce((s, c) => s + c.totalDiscount, 0);
+
     res.json({
       period,
       timeline,
@@ -173,6 +211,8 @@ router.get("/admin/reports", requireAdmin, async (req, res) => {
       },
       statusBreakdown,
       topProducts,
+      couponStats,
+      couponSummary: { totalCouponOrders, totalDiscountGiven },
     });
   } catch (err) {
     req.log.error(err);
