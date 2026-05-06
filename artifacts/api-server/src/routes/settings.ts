@@ -108,15 +108,20 @@ const DEFAULT_SETTINGS: Record<string, any> = {
   },
   shipping: {
     freeCities: "noida,delhi,new delhi",
+    freeStates: "",
     minOrderFreeShipping: 500,
     defaultCharge: 49,
+    freeCityDays: "1-2",
+    freeStateDays: "2-3",
+    paidDays: "5-7",
+    paidMessage: "Standard delivery in {days} business days",
   },
   newUserOffer: {
     enabled: false,
     discountType: "flat",
-    discountValue: 0,
-    message: "Welcome! Enjoy a special discount on your first order.",
-    validDays: 7,
+    discountValue: 100,
+    message: "Welcome! Enjoy ₹100 off on your first order.",
+    validDays: 30,
   },
   sizeGuide: {
     ringTip: "Wrap a thin strip of paper around your finger, mark where it overlaps, and measure the length in mm. Match it to the circumference column below.",
