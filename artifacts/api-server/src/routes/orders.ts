@@ -3,6 +3,23 @@ import { db } from "@workspace/db";
 import { ordersTable, cartItemsTable, productsTable, couponsTable } from "@workspace/db";
 import { eq, desc, and, sql } from "drizzle-orm";
 
+/* ── Secure Order Number ── */
+let _orderNumberColReady = false;
+async function ensureOrderNumberColumn() {
+  if (_orderNumberColReady) return;
+  await db.execute(sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_number TEXT UNIQUE`);
+  _orderNumberColReady = true;
+}
+
+function generateOrderNumber(): string {
+  const now = new Date();
+  const date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let rand = "";
+  for (let i = 0; i < 6; i++) rand += chars[Math.floor(Math.random() * chars.length)];
+  return `PRL-${date}-${rand}`;
+}
+
 async function deductStockAndLog(items: Array<{ productId: number; quantity: number }>, orderId: number) {
   try {
     for (const item of items) {
@@ -57,6 +74,7 @@ function safeArr(v: any): any[] {
 function toOrder(o: any) {
   return {
     id: o.id,
+    orderNumber: o.order_number || o.orderNumber || null,
     userId: o.userId,
     status: o.status,
     total: parseFloat(o.total),
@@ -156,6 +174,9 @@ router.post("/orders", async (req, res) => {
 
     const total = Math.max(0, subtotal - discount);
 
+    await ensureOrderNumberColumn();
+    const orderNumber = generateOrderNumber();
+
     const [order] = await db.insert(ordersTable).values({
       userId: user?.id,
       status: "pending",
@@ -170,6 +191,10 @@ router.post("/orders", async (req, res) => {
       customerName: user?.name || shippingAddress?.name,
       customerEmail: user?.email,
     }).returning();
+
+    // Assign the secure order number
+    await db.execute(sql`UPDATE orders SET order_number = ${orderNumber} WHERE id = ${order.id}`);
+    (order as any).order_number = orderNumber;
 
     await db.delete(cartItemsTable).where(eq(cartItemsTable.sessionId, sessionId));
 
