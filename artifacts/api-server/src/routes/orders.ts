@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db } from "@workspace/db";
-import { ordersTable, cartItemsTable, productsTable, couponsTable } from "@workspace/db";
+import { ordersTable, cartItemsTable, productsTable, couponsTable, siteSettingsTable } from "@workspace/db";
 import { eq, desc, and, sql } from "drizzle-orm";
 
 /* ── Secure Order Number ── */
@@ -9,6 +9,41 @@ async function ensureOrderNumberColumn() {
   if (_orderNumberColReady) return;
   await db.execute(sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS order_number TEXT UNIQUE`);
   _orderNumberColReady = true;
+}
+
+/* ── Extra Order Columns (shipping + special instructions + welcome discount) ── */
+let _extraColsReady = false;
+async function ensureExtraOrderColumns() {
+  if (_extraColsReady) return;
+  await db.execute(sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS shipping_charge TEXT DEFAULT '0'`);
+  await db.execute(sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS special_instructions TEXT`);
+  await db.execute(sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS welcome_discount TEXT DEFAULT '0'`);
+  _extraColsReady = true;
+}
+
+/* ── Shipping Config ── */
+async function getShippingConfig() {
+  try {
+    const [row] = await db.select().from(siteSettingsTable).where(eq(siteSettingsTable.key, "shipping"));
+    if (row?.value) return row.value as { freeCities: string; minOrderFreeShipping: number; defaultCharge: number };
+  } catch {}
+  return { freeCities: "noida,delhi,new delhi", minOrderFreeShipping: 500, defaultCharge: 49 };
+}
+
+/* ── New User Offer Config ── */
+async function getNewUserOfferConfig() {
+  try {
+    const [row] = await db.select().from(siteSettingsTable).where(eq(siteSettingsTable.key, "newUserOffer"));
+    if (row?.value) return row.value as { enabled: boolean; discountType: string; discountValue: number; message: string; validDays: number };
+  } catch {}
+  return null;
+}
+
+function calcShipping(city: string, subtotalINR: number, cfg: { freeCities: string; minOrderFreeShipping: number; defaultCharge: number }): number {
+  const freeCities = cfg.freeCities.split(",").map(c => c.trim().toLowerCase()).filter(Boolean);
+  if (freeCities.includes(city.trim().toLowerCase())) return 0;
+  if (subtotalINR >= cfg.minOrderFreeShipping) return 0;
+  return cfg.defaultCharge;
 }
 
 function generateOrderNumber(): string {
@@ -88,6 +123,9 @@ function toOrder(o: any) {
     customerName: o.customerName,
     customerEmail: o.customerEmail,
     createdAt: o.createdAt?.toISOString(),
+    shippingChargeINR: parseFloat(o.shipping_charge || o.shippingChargeINR || "0"),
+    specialInstructions: o.special_instructions || o.specialInstructions || null,
+    welcomeDiscountINR: parseFloat(o.welcome_discount || o.welcomeDiscountINR || "0"),
   };
 }
 
@@ -132,7 +170,7 @@ router.post("/orders", async (req, res) => {
   try {
     const user = (req as any).user;
     const sessionId = getSessionId(req);
-    const { shippingAddress, paymentMethod, couponCode } = req.body;
+    const { shippingAddress, paymentMethod, couponCode, specialInstructions, welcomeDiscountRequested } = req.body;
 
     const cartItems = await db.select().from(cartItemsTable).where(eq(cartItemsTable.sessionId, sessionId));
     if (cartItems.length === 0) {
@@ -140,7 +178,6 @@ router.post("/orders", async (req, res) => {
       return;
     }
 
-    const productIds = cartItems.map((i) => i.productId);
     const products = await db.select().from(productsTable);
     const productMap = new Map(products.map((p) => [p.id, p]));
 
@@ -158,6 +195,7 @@ router.post("/orders", async (req, res) => {
     }).filter(Boolean) as any[];
 
     const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const subtotalINR = Math.round(subtotal * 83);
     let discount = 0;
 
     if (couponCode) {
@@ -172,9 +210,37 @@ router.post("/orders", async (req, res) => {
       }
     }
 
-    const total = Math.max(0, subtotal - discount);
+    // ── Shipping calculation ──
+    const shippingCfg = await getShippingConfig();
+    const city = shippingAddress?.city || "";
+    const shippingChargeINR = calcShipping(city, subtotalINR, shippingCfg);
+    const shippingCharge = shippingChargeINR / 83;
+
+    // ── New User Welcome Discount ──
+    let welcomeDiscount = 0;
+    let welcomeDiscountINR = 0;
+    if (welcomeDiscountRequested && user) {
+      const offer = await getNewUserOfferConfig();
+      if (offer?.enabled) {
+        const validMs = (offer.validDays || 7) * 24 * 60 * 60 * 1000;
+        const isNew = user.createdAt && (Date.now() - new Date(user.createdAt).getTime()) < validMs;
+        if (isNew) {
+          if (offer.discountType === "percent") {
+            welcomeDiscountINR = Math.round(subtotalINR * offer.discountValue / 100);
+          } else if (offer.discountType === "flat") {
+            welcomeDiscountINR = offer.discountValue;
+          } else if (offer.discountType === "free_shipping") {
+            welcomeDiscountINR = shippingChargeINR;
+          }
+          welcomeDiscount = welcomeDiscountINR / 83;
+        }
+      }
+    }
+
+    const total = Math.max(0, subtotal - discount - welcomeDiscount + shippingCharge);
 
     await ensureOrderNumberColumn();
+    await ensureExtraOrderColumns();
     const orderNumber = generateOrderNumber();
 
     const [order] = await db.insert(ordersTable).values({
@@ -192,9 +258,17 @@ router.post("/orders", async (req, res) => {
       customerEmail: user?.email,
     }).returning();
 
-    // Assign the secure order number
-    await db.execute(sql`UPDATE orders SET order_number = ${orderNumber} WHERE id = ${order.id}`);
+    // Assign secure order number + extra fields
+    await db.execute(sql`UPDATE orders SET
+      order_number = ${orderNumber},
+      shipping_charge = ${shippingChargeINR.toString()},
+      special_instructions = ${specialInstructions || null},
+      welcome_discount = ${welcomeDiscountINR.toString()}
+    WHERE id = ${order.id}`);
     (order as any).order_number = orderNumber;
+    (order as any).shipping_charge = shippingChargeINR.toString();
+    (order as any).special_instructions = specialInstructions || null;
+    (order as any).welcome_discount = welcomeDiscountINR.toString();
 
     await db.delete(cartItemsTable).where(eq(cartItemsTable.sessionId, sessionId));
 

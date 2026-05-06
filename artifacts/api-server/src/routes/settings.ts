@@ -106,6 +106,18 @@ const DEFAULT_SETTINGS: Record<string, any> = {
     otpVerification: true,
     passwordReset: true,
   },
+  shipping: {
+    freeCities: "noida,delhi,new delhi",
+    minOrderFreeShipping: 500,
+    defaultCharge: 49,
+  },
+  newUserOffer: {
+    enabled: false,
+    discountType: "flat",
+    discountValue: 0,
+    message: "Welcome! Enjoy a special discount on your first order.",
+    validDays: 7,
+  },
   sizeGuide: {
     ringTip: "Wrap a thin strip of paper around your finger, mark where it overlaps, and measure the length in mm. Match it to the circumference column below.",
     ringWarnTip: "Measure at the end of the day when fingers are at their largest. If between sizes, choose the larger size.",
