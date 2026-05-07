@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db } from "@workspace/db";
-import { productsTable, categoriesTable, siteSettingsTable } from "@workspace/db";
+import { productsTable, categoriesTable, siteSettingsTable, reviewsTable, stockAlertsTable, wishlistTable } from "@workspace/db";
 import { eq, ilike, and, gte, lte, desc, asc, sql } from "drizzle-orm";
 import { requireAdmin } from "../lib/auth";
 import { triggerStockAlerts } from "./stock-alerts";
@@ -289,6 +289,10 @@ router.put("/products/:id", requireAdmin, async (req, res) => {
 router.delete("/products/:id", requireAdmin, async (req, res) => {
   try {
     const id = parseInt(req.params.id);
+    // Delete FK-dependent records first to avoid constraint violations
+    await db.delete(reviewsTable).where(eq(reviewsTable.productId, id));
+    await db.delete(stockAlertsTable).where(eq(stockAlertsTable.productId, id));
+    await db.delete(wishlistTable).where(eq(wishlistTable.productId, id));
     await db.delete(productsTable).where(eq(productsTable.id, id));
     res.json({ success: true, message: "Product deleted" });
   } catch (err) {
