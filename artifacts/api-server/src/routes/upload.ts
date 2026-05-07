@@ -230,4 +230,15 @@ router.post("/upload", requireAdmin, upload.single("file"), async (req, res) => 
   }
 });
 
+
+/* ── Cloudinary Connection Status ── */
+router.get('/cloudinary/status', requireAdmin, async (_req, res) => {
+  try {
+    await cloudinary.api.ping();
+    res.json({ ok: true, status: 'connected', cloud: process.env.CLOUDINARY_CLOUD_NAME ?? 'drelvi6a3' });
+  } catch (err: any) {
+    res.status(503).json({ ok: false, status: 'error', message: err?.message ?? 'Cloudinary not configured' });
+  }
+});
+
 export default router;
