@@ -205,6 +205,25 @@ router.patch("/admin/users/:id/role", requireAdmin, async (req, res) => {
   }
 });
 
+
+// Admin: delete a user
+router.delete("/admin/users/:id", requireAdmin, async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id);
+    const requesterId = (req as any).user?.id;
+    if (userId === requesterId) {
+      res.status(400).json({ error: "Cannot delete your own account" });
+      return;
+    }
+    const [deleted] = await db.delete(usersTable).where(eq(usersTable.id, userId)).returning();
+    if (!deleted) { res.status(404).json({ error: "User not found" }); return; }
+    res.json({ success: true });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Failed to delete user" });
+  }
+});
+
 export default router;
 
 
